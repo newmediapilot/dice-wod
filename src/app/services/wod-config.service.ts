@@ -24,14 +24,10 @@ export class WodConfigService {
       {name: 'Sit-up'},
       {name: 'V-Up'},
       {name: 'Leg Raise'},
-      // core
-      {name: 'Plank Hold'},
-      {name: 'Squat Hold'},
-      {name: 'Pike Hold'},
       // oblique
       {name: 'Windmill'},
       {name: 'Side Plank'},
-      {name: 'Turkish Get-Up'},
+      {name: 'Russian Twist'},
       // legs
       {name: 'Lunge'},
       {name: 'Spiderman Lunge'},
@@ -59,6 +55,47 @@ export class WodConfigService {
     if (!this.formValues.wodTypesSelectables.length) {
       this.formValues.wodTypesSelectables = JSON.parse(JSON.stringify(this.formValues.wodTypes));
     }
+  }
+
+  toggleSelectable(selection) {
+    const indexOf = this.formValues.wodTypesSelectables.indexOf(selection);
+    const selectable = this.formValues.wodTypesSelectables[indexOf];
+
+    if (this.isMaxedOutSelectables() && !selectable.checked) {
+      return false;
+    } else {
+
+      selectable.checked = !selectable.checked;
+
+      this.formValues.wodTypeSelecterPool = this.formValues.wodTypesSelectables.filter(item => {
+        return item.checked;
+      });
+
+      this.formValues.wodTypesSelectablesCount = this.formValues.wodTypesSelectables.filter(item => {
+        return item.checked;
+      }).length;
+
+      return true;
+    }
+
+  }
+
+  isMaxedOutSelectables() {
+    return this.formValues.wodTypesSelectablesCount >= 6;
+  }
+
+  listSelectables() {
+    return this.formValues.wodTypesSelectables.sort(function (a, b) {
+      var nameA = a.name.toUpperCase().replaceAll("[^A-Za-z]+", ""); // ignore upper and lowercase, keep only alphas
+      var nameB = b.name.toUpperCase().replaceAll("[^A-Za-z]+", ""); // ignore upper and lowercase, keep only alphas
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   generateRandomWOD() {

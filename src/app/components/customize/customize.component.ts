@@ -21,26 +21,13 @@ export class CustomizeComponent implements OnInit {
   }
 
   listSelectables() {
-    return this.formValues.wodTypesSelectables.sort((item) => {
-      return item.name;
-    });
+    return this.wodConfigService.listSelectables();
   }
 
   setWodSelection($event, t) {
-    if (this.formValues.wodTypesSelectablesCount >= 6 && !t.checked) {
+    if (!this.wodConfigService.toggleSelectable(t)) {
       $event.preventDefault();
-      return;
     }
-
-    t.checked = !t.checked;
-
-    this.formValues.wodTypeSelecterPool = this.formValues.wodTypesSelectables.filter(item => {
-      return item.checked;
-    });
-
-    this.formValues.wodTypesSelectablesCount = this.formValues.wodTypesSelectables.filter(item => {
-      return item.checked;
-    }).length;
   }
 
 }

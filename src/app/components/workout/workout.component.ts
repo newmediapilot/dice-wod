@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WodConfigService} from '../../services/wod-config.service';
+import {TimerService} from '../../services/timer.service';
 
 @Component({
   selector: 'app-workout',
@@ -11,6 +12,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   formValues = null;
   wodName = '';
   randomReps = '';
+  timer = null;
 
   constructor(
     private wodConfigService: WodConfigService
@@ -19,11 +21,21 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.startTime();
     this.generateRandomWOD()
   }
 
   ngOnDestroy() {
-    //
+    this.timer.clear();
+  }
+
+  get time() {
+    return this.timer.time;
+  }
+
+  startTime() {
+    this.timer = new TimerService(3);
+    this.timer.start();
   }
 
   generateRandomWOD() {
