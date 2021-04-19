@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-12">
+    <h1>WOD Type:</h1>
+  </div>
+  <div class="col-12 mt-4">
+    <div class="form-check form-switch">
+      <input (click)="setWodMode($event,'time')"
+             [checked]="(formValues.wodParams.wodType==='time')" class="form-check-input"
+             type="checkbox" id="wodType1" required>
+      <label class="form-check-label" for="wodType1">For Time</label>
+    </div>
+    <div class="form-check form-switch">
+      <input (click)="setWodMode($event,'rounds')"
+             [checked]="(formValues.wodParams.wodType==='rounds')" class="form-check-input"
+             type="checkbox" id="wodType2" required>
+      <label class="form-check-label" for="wodType2">For Rounds</label>
+    </div>
+  </div><!-- col-12 -->
+  <div class="col-12 mt-4" *ngIf="'time'===formValues.wodParams.wodType">
+    <div class="row">
+      <div class="col-12">
+        <h2>How many minutes?</h2>
+      </div>
+      <div class="col-12 mt-2">
+        <select [(ngModel)]="formValues.wodParams.wodTime" class="form-select" required>
+          <option value="0" selected>0</option>
+          <option value="5">5 seconds</option>
+          <option value="300">5 min</option>
+          <option value="600">10 min</option>
+          <option value="900">15 min</option>
+          <option value="1200">20 min</option>
+          <option value="1500">25 min</option>
+          <option value="1800">30 min</option>
+        </select>
+      </div>
+    </div>
+  </div><!-- col-12 -->
+  <div class="col-12 mt-4" *ngIf="'rounds'===formValues.wodParams.wodType">
+    <div class="row">
+      <div class="col-12">
+        <h2>How many rounds?</h2>
+      </div>
+      <div class="col-12 mt-2">
+        <select [(ngModel)]="formValues.wodParams.wodRounds" class="form-select" required>
+          <option value="0" selected>0</option>
+          <option value="5">5 rounds</option>
+          <option value="10">10 rounds</option>
+          <option value="15">15 rounds</option>
+          <option value="20">20 rounds</option>
+          <option value="25">25 rounds</option>
+          <option value="30">30 rounds</option>
+        </select>
+      </div>
+    </div>
+  </div><!-- col-12 -->
+  <div class="col-12 mt-4"
+       *ngIf="(
+        (formValues.wodParams.wodType==='time' && formValues.wodParams.wodTime) ||
+        (formValues.wodParams.wodType==='rounds' && formValues.wodParams.wodRounds)
+      )">
+    <button routerLink="/customize" class="btn btn-primary btn-block btn-lg">Next</button>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-12">
+    <h1>Movements ({{formValues.wodTypesSelectablesCount}}/{{formValues.wodMaximumMovements}}):</h1>
+  </div>
+  <div class="col-12 mt-4">
+    <div class="row">
+      <div *ngFor="let choice of listSelectables(); let i = index" class="col-3 mt-2">
+        <div class="form-check form-switch">
+          <input (click)="setWodSelection($event,choice)" class="form-check-input"
+                 [checked]="choice.checked"
+                 type="checkbox" id="{{'choice'+i}}">
+          <label class="form-check-label" for="{{'choice'+i}}">{{choice.name}}</label>
+        </div>
+      </div>
+    </div>
+  </div><!-- col-12 -->
+  <div class="col-12 mt-4">
+    <button class="btn btn-primary btn-block btn-lg" [disabled]="!(formValues.wodTypesSelectablesCount===formValues.wodMaximumMovements)" routerLink="/workout">Start</button>
+  </div>
+</div>
