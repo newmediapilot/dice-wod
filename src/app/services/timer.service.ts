@@ -6,15 +6,31 @@ import * as moment from 'moment';
 })
 export class TimerService {
 
-  interval;
-  rawLimit;
-  rawTime = 0;
-  callback;
-
-  constructor(seconds) {
+  interval;// interval instance
+  rawLimit;// raw limit in milliseconds (stops timer when complete)
+  rawTime = 0;// raw counter in milliseconds (counts until rawLimit)
+  callback; // function called on completion
+  constructor(
+    /**
+     * amount of seconds to run this timer
+     */
+    seconds,
+    /**
+     * optional param whereby if the place this is
+     * instantiated in no longer exists, quit the timer
+     * this is for memory leak protection
+     */
+    context?
+  ) {
     this.rawLimit = seconds * 1000;
   }
 
+  /**
+   * return complex object of timer state
+   * raw: milliseconds
+   * countdown: time backwards pretty
+   * stopwatch: time forward pretty
+   */
   get time() {
     return {
       raw: this.rawTime,
@@ -24,10 +40,12 @@ export class TimerService {
     };
   }
 
+  /**
+   * single tick to update 10 milliseconds
+   * stop when value reaches max
+   */
   tick() {
     this.rawTime += 10;
-    console.log('this.rawTime', this.rawTime);
-    console.log('this.rawLimit', this.rawLimit);
     if (this.rawTime >= this.rawLimit) {
       this.stop();
       this.rawTime = this.rawLimit;
@@ -35,19 +53,30 @@ export class TimerService {
     }
   }
 
- public start() {
+  /**
+   * only start the counter mechanism
+   */
+  public start() {
     this.stop();
     this.interval = setInterval(() => {
       this.tick();
     }, 10);
   }
 
+  /**
+   * only stop the counter mechanism
+   */
   stop() {
     if (this.interval) {
       clearInterval(this.interval);
     }
   }
 
+  /**
+   * define the callback to be played on completion
+   * @see TimerService.tick
+   * @param cb
+   */
   done(cb) {
     this.callback = cb;
   }
