@@ -7,16 +7,17 @@ export class WodConfigService {
 
   formValues = {
     wodParams: {
-      wodType: null,
-      wodTime: 0,
-      wodRounds: 0,
-      wodSets: 0,
-      wodSetsDone: 0,
+      wodType: null, // time or reps
+      wodTime: 0, // seconds for wod to last
+      wodRounds: 0, // rounds for wod to last (time is 3600s)
+      wodSets: 0, // sets for for to last
+      wodSetsDone: 0, // sets completed
     },
-    wodMaximumMovements: 6,
-    wodTypesSelectablesCount: 0,
-    wodTypeSelecterPool: [],
-    wodTypesSelectables: [],
+    wodMaximumMovements: 6, // max selectable checkboxes
+    wodTypesSelectablesCount: 0, // curr selected checkboxes
+    wodTypeSelecterPool: [], // selected pool of wodTypesSelectables[0-9].checked
+    wodTypesSelectables: [], // selectable list cloned from wodTypes
+    // master list, never modified only copied
     wodTypes: [
       // lats
       {name: 'Pull Down'},
@@ -59,6 +60,12 @@ export class WodConfigService {
     }
   }
 
+  /**
+   * toggle a single item in the list of selectables
+   * check if it's possible via max value
+   * return false if not selectable
+   * @param selection
+   */
   toggleSelectable(selection) {
     const indexOf = this.formValues.wodTypesSelectables.indexOf(selection);
     const selectable = this.formValues.wodTypesSelectables[indexOf];
@@ -82,10 +89,17 @@ export class WodConfigService {
 
   }
 
+  /**
+   * check if we selected too many/enough
+   */
   isMaxedOutSelectables() {
     return this.formValues.wodTypesSelectablesCount >= 6;
   }
 
+  /**
+   * sort selectable list by its alpha values only
+   * ignore special characters && numbers
+   */
   listSelectables() {
     return this.formValues.wodTypesSelectables.sort(function (a, b) {
       var nameA = a.name.toUpperCase().replaceAll("[^A-Za-z]+", ""); // ignore upper and lowercase, keep only alphas
@@ -100,6 +114,14 @@ export class WodConfigService {
     });
   }
 
+  /**
+   * fetch one random wod
+   * generate random reps
+   * minimum reps is 2
+   * TODO: increase reps @see below
+   * TODO: categorize wods as symmetrical (meaning if something takes a left and right arm it should be increased to at least 4)
+   * TODO: categorize wods as repeating (meaning if it's something very repetitive it shoudl be doubled ex. squats or jumps)
+   */
   generateRandomWOD() {
     const randomSelector = Math.floor(Math.random() * this.formValues.wodTypeSelecterPool.length);
     let reps = Math.ceil(Math.random() * 6);
@@ -113,8 +135,5 @@ export class WodConfigService {
       name: name,
       reps: reps,
     }
-  }
-
-  constructor() {
   }
 }
