@@ -9,14 +9,10 @@ export class TimerService {
   interval;
   rawLimit;
   rawTime = 0;
+  callback;
 
   constructor(seconds) {
     this.rawLimit = seconds * 1000;
-  }
-
-  restart() {
-    this.rawTime = 0;
-    this.start();
   }
 
   get time() {
@@ -30,27 +26,30 @@ export class TimerService {
 
   tick() {
     this.rawTime += 10;
+    console.log('this.rawTime', this.rawTime);
+    console.log('this.rawLimit', this.rawLimit);
     if (this.rawTime >= this.rawLimit) {
-      this.clear();
+      this.stop();
       this.rawTime = this.rawLimit;
+      this.callback();
     }
   }
 
-  start() {
-    this.clear();
+ public start() {
+    this.stop();
     this.interval = setInterval(() => {
       this.tick();
     }, 10);
   }
 
-  clear() {
+  stop() {
     if (this.interval) {
       clearInterval(this.interval);
     }
   }
 
   done(cb) {
-    cb();
+    this.callback = cb;
   }
 
 }

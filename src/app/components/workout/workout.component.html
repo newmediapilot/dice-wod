@@ -7,8 +7,13 @@
     </nav>
   </div>
   <div class="col-12 mt-4">
-    <h1>{{this.time.countdown}}</h1>
-    <h1>{{this.time.stopwatch}}</h1>
+    <h1 class="text-center">{{time}}</h1>
+  </div>
+  <div class="col-12 mt-4">
+    <button class="btn btn-primary btn-block btn-lg"
+            (click)="toggleTimer()">
+      {{(paused) ? 'start' : 'pause'}}
+    </button>
   </div>
   <div class="col-12 mt-4">
     <h1 class="text-center" style="min-height: 150px;">{{this.randomReps}} x</h1>

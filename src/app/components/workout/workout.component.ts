@@ -13,6 +13,8 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   wodName = '';
   randomReps = '';
   timer = null;
+  isCountdown = true;
+  paused = true;
 
   constructor(
     private wodConfigService: WodConfigService
@@ -21,21 +23,40 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.startTime();
+    this.prepareCountdown();
     this.generateRandomWOD()
   }
 
   ngOnDestroy() {
-    this.timer.clear();
+    this.timer.stop();
   }
 
   get time() {
-    return this.timer.time;
+    const {countdown, stopwatch} = this.timer.time;
+    return (this.isCountdown) ? countdown : stopwatch;
+  }
+
+  toggleTimer() {
+    (this.paused) ? this.timer.start() : this.timer.stop();
+    this.paused = !this.paused;
+  }
+
+  prepareCountdown() {
+    this.timer = new TimerService(10);
+    this.isCountdown = true;
+    this.timer.done(() => {
+      this.isCountdown = false;
+      this.startTime();
+    });
   }
 
   startTime() {
-    this.timer = new TimerService(3);
+    const time = this.wodConfigService.formValues.wodParams.wodTime || 5;
+    this.timer = new TimerService(time);
     this.timer.start();
+    this.timer.done(() => {
+      console.log('all done!');
+    })
   }
 
   generateRandomWOD() {

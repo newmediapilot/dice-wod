@@ -10,6 +10,8 @@ export class WodConfigService {
       wodType: null,
       wodTime: 0,
       wodRounds: 0,
+      wodSets: 0,
+      wodSetsDone: 0,
     },
     wodMaximumMovements: 6,
     wodTypesSelectablesCount: 0,
