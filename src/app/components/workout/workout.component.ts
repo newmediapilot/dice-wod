@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WodConfigService} from '../../services/wod-config.service';
 import {TimerService} from '../../services/timer.service';
+import * as confetti from 'canvas-confetti/dist/confetti.browser.js'
 
 @Component({
   selector: 'app-workout',
@@ -14,17 +15,22 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   randomReps = '';
   timer = null;
   isCountdown = true;
+  wodComplete = false;
   paused = true;
+  wodType = '';
 
   constructor(
     private wodConfigService: WodConfigService
   ) {
     this.formValues = wodConfigService.formValues;
+    this.wodType = wodConfigService.formValues.wodParams.wodType;
+    console.log('confetti', confetti);
   }
 
   ngOnInit() {
+    this.wodConfigService.prepareWOD();
     this.prepareCountdown();
-    this.generateRandomWOD()
+    this.generateRandomWOD();
   }
 
   ngOnDestroy() {
@@ -34,6 +40,18 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   get time() {
     const {countdown, stopwatch} = this.timer.time;
     return (this.isCountdown) ? countdown : stopwatch;
+  }
+
+  get sets() {
+    const {wodSetsDone} = this.wodConfigService.formValues.userData;
+
+    return wodSetsDone.length;
+  }
+
+  get todo() {
+    const {wodSetsDone} = this.wodConfigService.formValues.userData;
+    const {wodSets} = this.wodConfigService.formValues.wodParams;
+    return wodSets - wodSetsDone.length + 1;
   }
 
   toggleTimer() {
@@ -51,17 +69,38 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   }
 
   startTime() {
-    const time = this.wodConfigService.formValues.wodParams.wodTime || 5;
+    const {wodTime, wodType} = this.wodConfigService.formValues.wodParams;
+    const time = (wodType === 'time') ? wodTime : 3600;
     this.timer = new TimerService(time);
     this.timer.start();
     this.timer.done(() => {
-      console.log('all done!');
+      this.workoutComplete();
     })
   }
 
-  generateRandomWOD() {
-    const {name, reps} = this.wodConfigService.generateRandomWOD();
-    this.wodName = name;
-    this.randomReps = reps.toString();
+  wodRoundsRemain() {
+    const {wodType} = this.wodConfigService.formValues.wodParams;
+
+    if (wodType === 'rounds' && this.todo === 0) {
+      this.workoutComplete();
+      return false
+    }
+
+    return true;
   }
+
+  workoutComplete() {
+    this.wodComplete = true;
+    this.timer.stop();
+    window.alert('wod complete');
+  }
+
+  generateRandomWOD() {
+    if (this.wodRoundsRemain()) {
+      const {name, reps} = this.wodConfigService.generateRandomWOD();
+      this.wodName = name;
+      this.randomReps = reps.toString();
+    }
+  }
+
 }

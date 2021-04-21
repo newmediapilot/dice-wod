@@ -1,4 +1,11 @@
 <div class="row">
+  <div class="col-12 mt-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" routerLink="/start">Back</li>
+      </ol>
+    </nav>
+  </div>
   <div class="col-12">
     <h1>Movements ({{formValues.wodTypesSelectablesCount}}/{{formValues.wodMaximumMovements}}):</h1>
   </div>
@@ -15,6 +22,6 @@
     </div>
   </div><!-- col-12 -->
   <div class="col-12 mt-4">
-    <button class="btn btn-primary btn-block btn-lg" [disabled]="!(formValues.wodTypesSelectablesCount===formValues.wodMaximumMovements)" routerLink="/workout">Start</button>
+    <button class="btn btn-primary btn-block btn-lg" [disabled]="!(formValues.wodTypesSelectablesCount>=formValues.wodMinimumMovements)" routerLink="/workout">Start</button>
   </div>
 </div>

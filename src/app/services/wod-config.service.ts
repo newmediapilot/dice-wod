@@ -9,16 +9,26 @@ export class WodConfigService {
     wodParams: {
       wodType: null, // time or reps
       wodTime: 0, // seconds for wod to last
-      wodRounds: 0, // rounds for wod to last (time is 3600s)
       wodSets: 0, // sets for for to last
       wodSetsDone: 0, // sets completed
     },
+    userData: {
+      currentWorkout: null,
+      wodSetsDone: [],
+      workSetsLength: 0,
+    },
+    wodMinimumMovements: 3, // min selectable checkboxes
     wodMaximumMovements: 6, // max selectable checkboxes
     wodTypesSelectablesCount: 0, // curr selected checkboxes
-    wodTypeSelecterPool: [], // selected pool of wodTypesSelectables[0-9].checked
+    wodTypeSelectorPool: [], // selected pool of wodTypesSelectables[0-9].checked
     wodTypesSelectables: [], // selectable list cloned from wodTypes
     // master list, never modified only copied
     wodTypes: [
+      // arm
+      {name: 'Push Up'},
+      {name: 'Pike Push Up'},
+      {name: 'Overhead Press'},
+      {name: 'Handstand Push Up'},
       // lats
       {name: 'Pull Down'},
       {name: 'Bent Over Row'},
@@ -76,7 +86,7 @@ export class WodConfigService {
 
       selectable.checked = !selectable.checked;
 
-      this.formValues.wodTypeSelecterPool = this.formValues.wodTypesSelectables.filter(item => {
+      this.formValues.wodTypeSelectorPool = this.formValues.wodTypesSelectables.filter(item => {
         return item.checked;
       });
 
@@ -114,6 +124,27 @@ export class WodConfigService {
     });
   }
 
+  incrementWodSetsDone() {
+    this.formValues.wodParams.wodSetsDone += 1;
+  }
+
+  updateSetsDone(wodElement) {
+    const {userData} = this.formValues
+    userData.currentWorkout = wodElement;
+    userData.wodSetsDone.push(wodElement);
+    userData.workSetsLength = userData.wodSetsDone.length;
+  }
+
+  /**
+   * reset user counts for rounds/reps
+   */
+  prepareWOD() {
+    const {userData} = this.formValues
+    userData.currentWorkout = null
+    userData.wodSetsDone = [];
+    userData.workSetsLength = 0;
+  }
+
   /**
    * fetch one random wod
    * generate random reps
@@ -123,17 +154,21 @@ export class WodConfigService {
    * TODO: categorize wods as repeating (meaning if it's something very repetitive it shoudl be doubled ex. squats or jumps)
    */
   generateRandomWOD() {
-    const randomSelector = Math.floor(Math.random() * this.formValues.wodTypeSelecterPool.length);
+    const randomSelector = Math.floor(Math.random() * this.formValues.wodTypeSelectorPool.length);
     let reps = Math.ceil(Math.random() * 6);
-    const {name} = this.formValues.wodTypeSelecterPool[randomSelector] || {name: 'not-found'};
+    const {name} = this.formValues.wodTypeSelectorPool[randomSelector] || {name: 'not-found'};
 
     if (reps <= 1) {
       reps = 2;
     }
 
-    return {
+    const wodElement = {
       name: name,
       reps: reps,
-    }
+    };
+
+    this.updateSetsDone(wodElement);
+
+    return wodElement;
   }
 }
