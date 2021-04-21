@@ -1,0 +1,11 @@
+.customize-component--listing {
+  height: 53vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-left: 4px;
+  scroll-snap-type: y mandatory;
+
+  .customize-component--listing-item {
+    scroll-snap-align: start;
+  }
+}

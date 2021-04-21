@@ -1,17 +1,11 @@
-<div class="row">
-  <div class="col-12 mt-3">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item active" routerLink="/start">Back</li>
-      </ol>
-    </nav>
-  </div>
+<div class="ro">
   <div class="col-12">
-    <h1>Movements ({{formValues.wodTypesSelectablesCount}}/{{formValues.wodMaximumMovements}}):</h1>
+    <h1>Movements</h1>
   </div>
   <div class="col-12 mt-4">
-    <div class="row">
-      <div *ngFor="let choice of listSelectables(); let i = index" class="col-3 mt-2">
+    <div class="customize-component--listing row">
+      <div *ngFor="let choice of listSelectables(); let i = index"
+           class="customize-component--listing-item col-12 mt-2">
         <div class="form-check form-switch">
           <input (click)="setWodSelection($event,choice)" class="form-check-input"
                  [checked]="choice.checked"
@@ -22,6 +16,22 @@
     </div>
   </div><!-- col-12 -->
   <div class="col-12 mt-4">
-    <button class="btn btn-primary btn-block btn-lg" [disabled]="!(formValues.wodTypesSelectablesCount>=formValues.wodMinimumMovements)" routerLink="/workout">Start</button>
+    <div [ngStyle]="{
+           'visibility':selectionPercentage()>0?'visible':'hidden'
+         }" class="progress">
+      <div class="progress-bar" role="progressbar"
+           [ngStyle]="{
+             'width.%':selectionPercentage()
+           }">
+        {{selectionPercentage()}}%
+      </div>
+    </div>
+    <div class="d-flex justify-content-between mt-4">
+      <button class="btn btn-primary btn-block btn-lg" routerLink="/start">Back</button>
+      <button class="btn btn-primary btn-block btn-lg"
+              [disabled]="!(formValues.wodTypesSelectablesCount>=formValues.wodMinimumMovements)" routerLink="/workout">
+        Start
+      </button>
+    </div>
   </div>
 </div>

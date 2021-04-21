@@ -20,6 +20,12 @@ export class CustomizeComponent implements OnInit {
     //
   }
 
+  selectionPercentage() {
+    const {formValues} = this.wodConfigService;
+
+    return Math.round(formValues.wodTypesSelectablesCount / formValues.wodMaximumMovements * 100);
+  }
+
   listSelectables() {
     return this.wodConfigService.listSelectables();
   }

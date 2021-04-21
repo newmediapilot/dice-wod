@@ -15,7 +15,8 @@ export class WodConfigService {
     userData: {
       currentWorkout: null,
       wodSetsDone: [],
-      workSetsLength: 0,
+      wodSetsLength: 0,
+      wodPercentDone: 0,
     },
     wodMinimumMovements: 3, // min selectable checkboxes
     wodMaximumMovements: 6, // max selectable checkboxes
@@ -129,20 +130,23 @@ export class WodConfigService {
   }
 
   updateSetsDone(wodElement) {
-    const {userData} = this.formValues
+    const {userData} = this.formValues;
+    const {wodSets} = this.formValues.wodParams;
     userData.currentWorkout = wodElement;
     userData.wodSetsDone.push(wodElement);
-    userData.workSetsLength = userData.wodSetsDone.length;
+    userData.wodSetsLength = userData.wodSetsDone.length;
+    userData.wodPercentDone = (userData.wodSetsLength - 1) / wodSets;
   }
 
   /**
    * reset user counts for rounds/reps
    */
-  prepareWOD() {
-    const {userData} = this.formValues
-    userData.currentWorkout = null
+  resetSets() {
+    const {userData} = this.formValues;
+    userData.currentWorkout = null;
     userData.wodSetsDone = [];
-    userData.workSetsLength = 0;
+    userData.wodSetsLength = 0;
+    userData.wodPercentDone = 0;
   }
 
   /**

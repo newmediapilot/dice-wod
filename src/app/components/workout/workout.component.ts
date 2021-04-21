@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WodConfigService} from '../../services/wod-config.service';
 import {TimerService} from '../../services/timer.service';
-import * as confetti from 'canvas-confetti/dist/confetti.browser.js'
 
 @Component({
   selector: 'app-workout',
@@ -24,17 +23,34 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   ) {
     this.formValues = wodConfigService.formValues;
     this.wodType = wodConfigService.formValues.wodParams.wodType;
-    console.log('confetti', confetti);
   }
 
   ngOnInit() {
-    this.wodConfigService.prepareWOD();
+    this.wodConfigService.resetSets();
     this.prepareCountdown();
     this.generateRandomWOD();
   }
 
   ngOnDestroy() {
     this.timer.stop();
+  }
+
+  get wodPercent() {
+    const {wodType} = this.formValues.wodParams;
+    const {wodPercentDone} = this.formValues.userData;
+
+    let percent = 0;
+
+    if ('time' == wodType && !this.isCountdown)
+      percent = Math.round(this.timer.percent * 100);
+
+    if ('rounds' == wodType)
+      percent = Math.round(wodPercentDone * 100);
+
+    console.log('this.timer.percent', this.timer.percent);
+    console.log('wodPercentDone', wodPercentDone);
+
+    return percent;
   }
 
   get time() {

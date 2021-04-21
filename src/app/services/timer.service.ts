@@ -36,7 +36,8 @@ export class TimerService {
       raw: this.rawTime,
       rawReverse: this.rawLimit - this.rawTime,
       countdown: moment(this.rawLimit - this.rawTime).format('mm:ss:SSS').toString(),
-      stopwatch: moment(this.rawTime).format('mm:ss:SSS').toString()
+      stopwatch: moment(this.rawTime).format('mm:ss:SSS').toString(),
+      percent: this.rawTime / this.rawLimit,
     };
   }
 
