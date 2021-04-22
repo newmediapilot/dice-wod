@@ -32,6 +32,9 @@ C:\Users\marcinzajkowski\AppData\Local\Android\Sdk\build-tools\30.0.3\zipalign.e
 ```
 cd C:\Users\marcinzajkowski\Desktop\desktop\newmediapilot\dice-wod\cordova\io.dicewod.www
 
+del /f C:\Users\marcinzajkowski\Desktop\desktop\newmediapilot\dice-wod\cordova\io.dicewod.www\platforms\android\app\build\outputs\apk\release\dicewod.apk
+del /f C:\Users\marcinzajkowski\Desktop\desktop\newmediapilot\dice-wod\cordova\io.dicewod.www\platforms\android\app\build\outputs\apk\release\dicewod.apk
+
 cordova build --release android
 
 rename C:\Users\marcinzajkowski\Desktop\desktop\newmediapilot\dice-wod\cordova\io.dicewod.www\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk dicewod.apk
