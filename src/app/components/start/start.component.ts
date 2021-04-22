@@ -1,22 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
 import {WodConfigService} from '../../services/wod-config.service';
+import {ConfettiService} from '../../services/confetti.service';
 
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
   styleUrls: ['./start.component.scss']
 })
-export class StartComponent implements OnInit {
+export class StartComponent {
 
   formValues = null;
 
   constructor(private wodConfigService: WodConfigService) {
     this.formValues = wodConfigService.formValues
-  }
-
-  ngOnInit() {
-    //
   }
 
   setWodMode($event, t) {
