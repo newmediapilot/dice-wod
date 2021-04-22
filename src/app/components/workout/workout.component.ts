@@ -1,6 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {WodConfigService} from '../../services/wod-config.service';
 import {TimerService} from '../../services/timer.service';
+import {ConfettiService} from '../../services/confetti.service';
 
 @Component({
   selector: 'app-workout',
@@ -18,6 +19,8 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   paused = true;
   wodType = '';
 
+  @ViewChild('confetti', {static: true}) confettiRef: ElementRef;
+
   constructor(
     private wodConfigService: WodConfigService
   ) {
@@ -29,10 +32,16 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     this.wodConfigService.resetSets();
     this.prepareCountdown();
     this.generateRandomWOD();
+    this.celebrate();
   }
 
   ngOnDestroy() {
     this.timer.stop();
+  }
+
+  celebrate() {
+    const confetti = new ConfettiService(this.confettiRef.nativeElement);
+    confetti.celebrate();
   }
 
   get wodPercent() {
