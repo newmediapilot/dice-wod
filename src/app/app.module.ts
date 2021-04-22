@@ -8,6 +8,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomizeComponent} from './components/customize/customize.component';
 import {WodConfigService} from './services/wod-config.service';
 import { WorkoutComponent } from './components/workout/workout.component';
+import { IndexComponent } from './components/index/index.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { WorkoutComponent } from './components/workout/workout.component';
     StartComponent,
     CustomizeComponent,
     WorkoutComponent,
+    IndexComponent,
   ],
   imports: [
     BrowserModule,
