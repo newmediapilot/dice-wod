@@ -29,7 +29,7 @@ export class StartComponent implements OnInit {
     this.formValues.wodParams.wodType = t;
   }
 
-  setWodSets($event, t) {
+  setWodSets($event) {
     this.formValues.wodParams.wodSets = Number(this.formValues.wodParams.wodSets);
   }
 
