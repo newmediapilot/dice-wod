@@ -59,7 +59,17 @@ export class WodConfigService {
       {name: 'Good Morning'},
       {name: 'Deadlift'},
       {name: 'Russian Deadlift'},
-    ]
+    ],
+    wodRepAmounts: (() => {
+      const array = [{value: "undefined", label: "Select reps"}];
+      for (let i = 1; i <= 20; i++) array.push({value: String(i * 5), label: `${i * 5} rounds`});
+      return array;
+    })(),
+    wodTimeAmounts: (() => {
+      const array = [{value: "undefined", label: "Select duration"}];
+      for (let i = 1; i <= 20; i++) array.push({value: String(i * 5), label: `${i * 5} minutes`});
+      return array;
+    })(),
   };
 
   /**
