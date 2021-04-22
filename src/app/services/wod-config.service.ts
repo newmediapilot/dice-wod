@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -112,16 +113,11 @@ export class WodConfigService {
    * ignore special characters && numbers
    */
   listSelectables() {
-    return this.formValues.wodTypesSelectables.sort(function (a, b) {
-      var nameA = a.name.toUpperCase().replaceAll("[^A-Za-z]+", ""); // ignore upper and lowercase, keep only alphas
-      var nameB = b.name.toUpperCase().replaceAll("[^A-Za-z]+", ""); // ignore upper and lowercase, keep only alphas
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
+    return _.sortBy(this.formValues.wodTypesSelectables, (selectable) => {
+      return selectable
+        .name
+        .replace(/[^A-Za-z]+/, "")
+        .toUpperCase();
     });
   }
 
