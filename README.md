@@ -1,7 +1,14 @@
 # Changelog
 
 https://www.npmjs.com/package/generate-changelog
-### Example
+### View prett Git Logs
+`git log --pretty=format:"%s" --date=short
+
+
+
+`
+
+### Generate Docs
 `generate-changelog -a 1.0.0-a3..1.0.0-a5`
 
 To use this module, your commit messages have to be in this format:
