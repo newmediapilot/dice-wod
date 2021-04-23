@@ -55,7 +55,10 @@ export class TimerService {
    * only start the counter mechanism
    */
   public start() {
-    this.stop();
+    console.log('TimerService::start');
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
     this.interval = setInterval(() => {
       this.tick();
     }, 10);
@@ -65,6 +68,7 @@ export class TimerService {
    * only stop the counter mechanism
    */
   stop() {
+    console.log('TimerService::stop');
     if (this.interval) {
       clearInterval(this.interval);
     }
@@ -76,6 +80,7 @@ export class TimerService {
    * @param cb
    */
   done(cb) {
+    console.log('TimerService::done');
     this.callback = cb;
   }
 

@@ -50,14 +50,8 @@ export class WorkoutComponent implements OnInit, OnDestroy {
 
     let percent = 0;
 
-    if ('time' == wodType && !this.isCountdown)
-      percent = Math.round(this.timer.percent * 100);
-
-    if ('rounds' == wodType)
-      percent = Math.round(wodPercentDone * 100);
-
-    console.log('this.timer.percent', this.timer.percent);
-    console.log('wodPercentDone', wodPercentDone);
+    if ('time' == wodType && !this.isCountdown) percent = Math.round(this.timer.percent * 100);
+    if ('rounds' == wodType) percent = Math.round(wodPercentDone * 100);
 
     return percent;
   }
@@ -117,7 +111,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   workoutComplete() {
     this.wodComplete = true;
     this.timer.stop();
-    window.alert('wod complete');
+    this.celebrate();
   }
 
   generateRandomWOD() {
