@@ -14,6 +14,8 @@ https://gradle.org/
 Derived from:
 https://codesundar.com/publish-cordova-apps-to-playstore/
 ### Open CMD window
+## Increment version here
+`C:\Users\marcinzajkowski\Desktop\desktop\newmediapilot\dice-wod\cordova\io.dicewod.www\platforms\android\app\src\main\AndroidManifest.xml`
 ## First time build
 ```
 cd C:\Users\marcinzajkowski\Desktop\desktop\newmediapilot\dice-wod\cordova\io.dicewod.www
