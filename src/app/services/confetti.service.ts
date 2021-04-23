@@ -37,7 +37,6 @@ export class ConfettiService {
       this.confettiCanvas.style.height = '100%';
       this.confettiCanvas.style.left = '0';
       this.confettiCanvas.style.top = '0';
-      console.log(parentElement);
       this.parentElement.appendChild(this.confettiCanvas);
       this.confettiClass = this.confetti.create(
         this.confettiCanvas,
