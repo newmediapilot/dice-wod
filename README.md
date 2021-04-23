@@ -1,3 +1,12 @@
+# Changelog
+
+https://www.npmjs.com/package/generate-changelog
+### Example
+`generate-changelog -a 1.0.0-a3..1.0.0-a5`
+
+To use this module, your commit messages have to be in this format:
+`type(category): description [flags]`
+
 # DiceWod
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.9.
