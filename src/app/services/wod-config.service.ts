@@ -26,39 +26,42 @@ export class WodConfigService {
     wodTypesSelectables: [], // selectable list cloned from wodTypes
     // master list, never modified only copied
     wodTypes: [
-      // arm
+      {name: 'Plank Shoulder Tap'},
+      {name: 'Deadlift'},
+      {name: 'Bench'},
+      {name: 'Snatch'},
+      {name: 'Front Squat'},
+      {name: 'Back Squat'},
+      {name: 'Clean'},
+      {name: 'Clean & Jerk'},
+      {name: 'Snatch'},
+      {name: 'Mountain Climber'},
       {name: 'Push Up'},
       {name: 'Pike Push Up'},
       {name: 'Overhead Press'},
       {name: 'Handstand Push Up'},
-      // lats
       {name: 'Pull Down'},
       {name: 'Bent Over Row'},
       {name: 'Pull Up'},
-      // abdomen
       {name: 'Sit-up'},
       {name: 'V-Up'},
       {name: 'Leg Raise'},
-      // oblique
+      {name: 'Toe to Bar'},
+      {name: 'Jumping Jack'},
+      {name: 'Athletic Jump'},
       {name: 'Windmill'},
       {name: 'Side Plank'},
       {name: 'Russian Twist'},
-      // legs
       {name: 'Lunge'},
       {name: 'Spiderman Lunge'},
       {name: 'Step-Back Lunge'},
-      // legs
       {name: 'Air Squat'},
-      {name: 'Front Squat'},
-      {name: 'Back Squat'},
-      // full body
       {name: 'Athletic Burpee'},
       {name: 'Burpee'},
       {name: 'Devil Press'},
-      // hinge
       {name: 'Good Morning'},
-      {name: 'Deadlift'},
       {name: 'Russian Deadlift'},
+      {name: 'Sumo Deadlift'},
     ],
     wodRepAmounts: (() => {
       const array = [{value: "undefined", label: "Select reps"}];
