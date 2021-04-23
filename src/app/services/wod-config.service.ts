@@ -23,6 +23,7 @@ export class WodConfigService {
     wodMaximumMovements: 6, // max selectable checkboxes
     wodTypesSelectablesCount: 0, // curr selected checkboxes
     wodTypeSelectorPool: [], // selected pool of wodTypesSelectables[0-9].checked
+    wodTypeMovementPool: [], // randomly generated pool of wods from selector pool
     wodTypesSelectables: [], // selectable list cloned from wodTypes
     // master list, never modified only copied
     wodTypes: [
@@ -158,30 +159,67 @@ export class WodConfigService {
     userData.wodPercentDone = 0;
   }
 
-  /**
-   * fetch one random wod
-   * generate random reps
-   * minimum reps is 2
-   * TODO: increase reps @see below
-   * TODO: categorize wods as symmetrical (meaning if something takes a left and right arm it should be increased to at least 4)
-   * TODO: categorize wods as repeating (meaning if it's something very repetitive it shoudl be doubled ex. squats or jumps)
-   */
-  generateRandomWOD() {
-    const randomSelector = Math.floor(Math.random() * this.formValues.wodTypeSelectorPool.length);
-    let reps = Math.ceil(Math.random() * 6);
-    const {name} = this.formValues.wodTypeSelectorPool[randomSelector] || {name: 'not-found'};
+  selectRandomReps(move) {
+    return Math.ceil(Math.random() * 6);
+  }
 
-    if (reps <= 1) {
-      reps = 2;
+  selectRandomMove() {
+    const randomSelector = Math.floor(Math.random() * this.formValues.wodTypeSelectorPool.length);
+    return this.formValues.wodTypeSelectorPool[randomSelector];
+  }
+
+  generateRandomMoveReps() {
+    const move = this.selectRandomMove();
+    const reps = this.selectRandomReps(move);
+    return {
+      name: move.name,
+      reps: reps
+    }
+  }
+
+  generateRandomWODs(maxRounds) {
+
+    console.log('WodConfigService::generateRandomWODs::maxRounds', maxRounds);
+
+    // add first wod without any checks
+    const movementPool = [this.generateRandomMoveReps()];
+    // counter for random generator
+    let curr = 0;
+    // next proposed movement
+    let next = null;
+    // last existing movement
+    let last = null;
+
+    // generate a random item - as long as it's different
+    // from the last item; we don't want repetitive work
+    while (curr < maxRounds && this.formValues.wodTypeSelectorPool.length) {
+      last = _.last(movementPool);
+      next = this.generateRandomMoveReps();
+      if (last.name != next.name) {
+        movementPool.push(next);
+        curr++;
+      }
     }
 
-    const wodElement = {
-      name: name,
-      reps: reps,
-    };
+    // populate movement pool for "random generation"
+    this.formValues.wodTypeMovementPool = movementPool;
 
-    this.updateSetsDone(wodElement);
+    // report list of items to pick from
+    movementPool.forEach((item) => {
+      console.log('WodConfigService::generateRandomWODs', item.name, item.reps);
+    })
+  }
 
-    return wodElement;
+  /**
+   * fetch one random wod from generated
+   * pool @see generateRandomWODs(number)
+   */
+  fetchNextMovement() {
+    const current = this.formValues.wodTypeMovementPool.pop();
+    const upcoming = _.last(this.formValues.wodTypeMovementPool);
+    return {
+      current,
+      upcoming
+    }
   }
 }

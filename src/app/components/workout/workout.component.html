@@ -12,6 +12,10 @@
     </div>
   </div>
   <div class="col-12 mt-4">
+    <p>Upcoming:</p>
+    <h4>{{wodNameUpcoming}}</h4>
+  </div>
+  <div class="col-12 mt-4">
     <h1 style="font-size: 15vw;" class="text-center">{{this.randomReps}} reps</h1>
     <h2 style="font-size: 15vw;" class="text-center">{{this.wodName}}</h2>
   </div>
@@ -46,13 +50,13 @@
       <button class="btn btn-primary btn-block btn-lg"
               [disabled]="isCountdown"
               *ngIf="!isCountdown&&!wodComplete"
-              (click)="generateRandomWOD()">
-        Roll !
+              (click)="fetchNextMovement()">
+        Done
       </button>
       <button class="btn btn-primary btn-block btn-lg"
               *ngIf="wodComplete"
               routerLink="/start">
-        Done
+        Home
       </button>
     </div>
   </div>

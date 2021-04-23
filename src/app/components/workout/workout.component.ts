@@ -12,6 +12,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
 
   formValues = null;
   wodName = '';
+  wodNameUpcoming = '';
   randomReps = '';
   timer = null;
   isCountdown = true;
@@ -30,9 +31,8 @@ export class WorkoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.wodConfigService.resetSets();
+    this.prepareMovements();
     this.prepareCountdown();
-    this.generateRandomWOD();
-    this.celebrate();
   }
 
   ngOnDestroy() {
@@ -69,13 +69,24 @@ export class WorkoutComponent implements OnInit, OnDestroy {
 
   get todo() {
     const {wodSetsDone} = this.wodConfigService.formValues.userData;
-    const {wodSets} = this.wodConfigService.formValues.wodParams;
-    return wodSets - wodSetsDone.length + 1;
+    const {wodTypeMovementPool} = this.wodConfigService.formValues;
+    return wodTypeMovementPool.length;
   }
 
   toggleTimer() {
     (this.paused) ? this.timer.start() : this.timer.stop();
     this.paused = !this.paused;
+  }
+
+  prepareMovements() {
+    const {wodType} = this.wodConfigService.formValues.wodParams;
+    const {wodSets} = this.wodConfigService.formValues.wodParams;
+    if (wodType === 'time') {
+      this.wodConfigService.generateRandomWODs(300);
+    } else {
+      this.wodConfigService.generateRandomWODs(wodSets);
+    }
+    this.fetchNextMovement();
   }
 
   prepareCountdown() {
@@ -114,11 +125,12 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     this.celebrate();
   }
 
-  generateRandomWOD() {
+  fetchNextMovement() {
     if (this.wodRoundsRemain()) {
-      const {name, reps} = this.wodConfigService.generateRandomWOD();
-      this.wodName = name;
-      this.randomReps = reps.toString();
+      const {current, upcoming} = this.wodConfigService.fetchNextMovement();
+      this.wodName = current.name;
+      this.wodNameUpcoming = upcoming.name;
+      this.randomReps = current.reps.toString();
     }
   }
 
