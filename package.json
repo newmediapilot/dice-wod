@@ -1,6 +1,6 @@
 {
   "name": "dice-wod",
-  "version": "1.0.0-a5",
+  "version": "1.0.0-a6",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
