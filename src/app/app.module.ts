@@ -9,6 +9,7 @@ import {CustomizeComponent} from './components/customize/customize.component';
 import {WodConfigService} from './services/wod-config.service';
 import { WorkoutComponent } from './components/workout/workout.component';
 import { IndexComponent } from './components/index/index.component';
+import { TimerComponent } from './components/common/timer/timer.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { IndexComponent } from './components/index/index.component';
     CustomizeComponent,
     WorkoutComponent,
     IndexComponent,
+    TimerComponent,
   ],
   imports: [
     BrowserModule,

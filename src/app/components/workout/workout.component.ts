@@ -2,13 +2,14 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef} f
 import {WodConfigService} from '../../services/wod-config.service';
 import {TimerService} from '../../services/timer.service';
 import {ConfettiService} from '../../services/confetti.service';
+import {TimerComponent} from '../common/timer/timer.component';
 
 @Component({
   selector: 'app-workout',
   templateUrl: './workout.component.html',
   styleUrls: ['./workout.component.scss']
 })
-export class WorkoutComponent implements OnInit, OnDestroy {
+export class WorkoutComponent implements OnInit {
 
   formValues = null;
   wodName = '';
@@ -20,6 +21,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   paused = true;
   wodType = '';
 
+  @ViewChild(TimerComponent, {static: true}) appTimer: TimerComponent;
   @ViewChild('confetti', {static: true}) confettiRef: ElementRef;
 
   constructor(
@@ -32,11 +34,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.wodConfigService.resetSets();
     this.prepareMovements();
-    this.prepareCountdown();
-  }
-
-  ngOnDestroy() {
-    this.timer.stop();
+    this.fetchNextMovement();
   }
 
   celebrate() {
@@ -56,72 +54,44 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     return percent;
   }
 
-  get time() {
-    const {countdown, stopwatch} = this.timer.time;
-    return (this.isCountdown) ? countdown : stopwatch;
+  get wodSetsDone() {
+    return this.wodConfigService.formValues.userData.wodSetsDone.length;
   }
 
-  get sets() {
-    const {wodSetsDone} = this.wodConfigService.formValues.userData;
-
-    return wodSetsDone.length;
-  }
-
-  get todo() {
-    const {wodSetsDone} = this.wodConfigService.formValues.userData;
-    const {wodTypeMovementPool} = this.wodConfigService.formValues;
-    return wodTypeMovementPool.length;
-  }
-
-  toggleTimer() {
-    (this.paused) ? this.timer.start() : this.timer.stop();
-    this.paused = !this.paused;
+  get wodSetsLeft() {
+    return this.wodConfigService.formValues.wodTypeMovementPool.length;
   }
 
   prepareMovements() {
     const {wodType} = this.wodConfigService.formValues.wodParams;
     const {wodSets} = this.wodConfigService.formValues.wodParams;
     if (wodType === 'time') {
-      this.wodConfigService.generateRandomWODs(300);
+      this.wodConfigService.generateRandomWODs(900);
     } else {
       this.wodConfigService.generateRandomWODs(wodSets);
     }
-    this.fetchNextMovement();
   }
 
-  prepareCountdown() {
-    this.timer = new TimerService(10);
-    this.isCountdown = true;
-    this.timer.done(() => {
-      this.isCountdown = false;
-      this.startTime();
-    });
-  }
-
-  startTime() {
+  determineWodDuration() {
     const {wodTime, wodType} = this.wodConfigService.formValues.wodParams;
-    const time = (wodType === 'time') ? wodTime : 3600;
-    this.timer = new TimerService(time);
-    this.timer.start();
-    this.timer.done(() => {
-      this.workoutComplete();
-    })
+    return (wodType === 'time') ? wodTime : 9000;
   }
 
   wodRoundsRemain() {
-    const {wodType} = this.wodConfigService.formValues.wodParams;
-
-    if (wodType === 'rounds' && this.todo === 0) {
+    if (this.wodSetsLeft === 0) {
       this.workoutComplete();
-      return false
+      return false;
     }
-
     return true;
+  }
+
+  timerStateCompleted() {
+    this.workoutComplete();
   }
 
   workoutComplete() {
     this.wodComplete = true;
-    this.timer.stop();
+    this.appTimer.start(); // pauses
     this.celebrate();
   }
 
@@ -129,7 +99,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     if (this.wodRoundsRemain()) {
       const {current, upcoming} = this.wodConfigService.fetchNextMovement();
       this.wodName = current.name;
-      this.wodNameUpcoming = upcoming.name;
+      if(upcoming) this.wodNameUpcoming = upcoming.name;
       this.randomReps = current.reps.toString();
     }
   }
