@@ -3,6 +3,7 @@ import {TimerComponent} from '../common/timer/timer.component';
 import {WodConfigService} from '../../services/wod-config.service';
 import {ConfettiService} from '../../services/confetti.service';
 import {WorkoutComponent} from '../workout/workout.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-workout-time',
@@ -15,9 +16,10 @@ export class WorkoutTimeComponent extends WorkoutComponent implements OnInit {
   @ViewChild('confetti', {static: true}) confettiRef: ElementRef;
 
   constructor(
-    wodConfigService: WodConfigService
+    wodConfigService: WodConfigService,
+    router: Router
   ) {
-    super(wodConfigService);
+    super(wodConfigService, router);
   }
 
   prepareMovements() {

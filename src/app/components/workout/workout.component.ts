@@ -15,14 +15,17 @@ export class WorkoutComponent implements OnInit {
   paused = true;
   wodType = '';
   wodConfigService;
+  router;
 
   @ViewChild(TimerComponent, {static: true}) appTimer: TimerComponent;
   @ViewChild('confetti', {static: true}) confettiRef: ElementRef;
 
   constructor(
-    wodConfigService: WodConfigService
+    wodConfigService: WodConfigService,
+    router: router
   ) {
     this.wodConfigService = wodConfigService;
+    this.router = router;
     this.formValues = wodConfigService.formValues;
     this.wodType = wodConfigService.formValues.wodParams.wodType;
   }
