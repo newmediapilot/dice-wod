@@ -27,42 +27,206 @@ export class WodConfigService {
     wodTypesSelectables: [], // selectable list cloned from wodTypes
     // master list, never modified only copied
     wodTypes: [
-      {name: 'Plank Shoulder Tap'},
-      {name: 'Deadlift'},
-      {name: 'Bench'},
-      {name: 'Snatch'},
-      {name: 'Front Squat'},
-      {name: 'Back Squat'},
-      {name: 'Clean'},
-      {name: 'Clean & Jerk'},
-      {name: 'Snatch'},
-      {name: 'Mountain Climber'},
-      {name: 'Push Up'},
-      {name: 'Pike Push Up'},
-      {name: 'Overhead Press'},
-      {name: 'Handstand Push Up'},
-      {name: 'Pull Down'},
-      {name: 'Bent Over Row'},
-      {name: 'Pull Up'},
-      {name: 'Sit-up'},
-      {name: 'V-Up'},
-      {name: 'Leg Raise'},
-      {name: 'Toe to Bar'},
-      {name: 'Jumping Jack'},
-      {name: 'Athletic Jump'},
-      {name: 'Windmill'},
-      {name: 'Side Plank'},
-      {name: 'Russian Twist'},
-      {name: 'Lunge'},
-      {name: 'Spiderman Lunge'},
-      {name: 'Step-Back Lunge'},
-      {name: 'Air Squat'},
-      {name: 'Athletic Burpee'},
-      {name: 'Burpee'},
-      {name: 'Devil Press'},
-      {name: 'Good Morning'},
-      {name: 'Russian Deadlift'},
-      {name: 'Sumo Deadlift'},
+      {
+        name: 'Shoulder Tap',
+        min: 6,
+        max: 20,
+        symmetrical: true
+      },
+      {
+        name: 'Dead-lift',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Bench',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Snatch',
+        min: 3,
+        max: 9
+      },
+      {
+        name: 'Front Squat',
+        min: 5,
+        max: 10
+      },
+      {
+        name: 'Back Squat',
+        min: 5,
+        max: 10
+      },
+      {
+        name: 'Clean',
+        min: 3,
+        max: 9
+      },
+      {
+        name: 'Clean & Jerk',
+        min: 3,
+        max: 6
+      },
+      {
+        name: 'Mountain Climber',
+        min: 8,
+        max: 20,
+        symmetrical: true
+      },
+      {
+        name: 'Push Up',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Pike Push Up',
+        min: 5,
+        max: 10
+      },
+      {
+        name: 'Overhead Press',
+        min: 5,
+        max: 10
+      },
+      {
+        name: 'Handstand Push Up',
+        min: 5,
+        max: 10
+      },
+      {
+        name: 'Pull Down',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Bent Over Row',
+        min: 5,
+        max: 10
+      },
+      {
+        name: 'Pull Up',
+        min: 5,
+        max: 10
+      },
+      {
+        name: 'Sit-up',
+        min: 10,
+        max: 15
+      },
+      {
+        name: 'V-Up',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Hanging Leg Raise',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Standing Leg Raise',
+        min: 10,
+        max: 30,
+        symmetrical: true
+      },
+      {
+        name: 'Knee to Elbow',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Toe to Bar',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Jumping Jack',
+        min: 15,
+        max: 30
+      },
+      {
+        name: 'Athletic Jump',
+        min: 10,
+        max: 30,
+        symmetrical: true
+      },
+      {
+        name: 'Windmill',
+        min: 8,
+        max: 20,
+        symmetrical: true
+      },
+      {
+        name: 'Russian Twist',
+        min: 8,
+        max: 20,
+        symmetrical: true
+      },
+      {
+        name: 'Lunge',
+        min: 10,
+        max: 30,
+        symmetrical: true
+      },
+      {
+        name: 'Jumping Lunge',
+        min: 10,
+        max: 30,
+        symmetrical: true
+      },
+      {
+        name: 'Spiderman Lunge',
+        min: 8,
+        max: 20
+      },
+      {
+        name: 'Step-Back Lunge',
+        min: 10,
+        max: 30,
+        symmetrical: true
+      },
+      {
+        name: 'Air Squat',
+        min: 10,
+        max: 30
+      },
+      {
+        name: 'Athletic Burpee',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Burpee',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Devil Press',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Good Morning',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Russian Dead-lift',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Sumo Dead-lift',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Turkish Get-up',
+        min: 4,
+        max: 10,
+        symmetrical: true
+      },
     ],
     wodRepAmounts: (() => {
       const array = [{value: "undefined", label: "Select reps"}];
@@ -160,7 +324,19 @@ export class WodConfigService {
   }
 
   selectRandomReps(move) {
-    return Math.ceil(Math.random() * 6);
+    const theMove = move;
+    let theReps = 0;
+
+    // here we determine the minimum reps + random up to max reps
+    // we use ceil because random will never reach the max without a push
+    theReps = Math.ceil(theMove.min + (Math.random() * (theMove.max - theMove.min)));
+
+    // if a movement takes both arms or legs we make it an even number
+    if (theMove.symmetrical) {
+      theReps = Math.ceil(theReps / 2) * 2;
+    }
+
+    return theReps;
   }
 
   selectRandomMove() {
