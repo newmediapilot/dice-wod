@@ -2,6 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef} f
 import {WodConfigService} from '../../services/wod-config.service';
 import {ConfettiService} from '../../services/confetti.service';
 import {TimerComponent} from '../common/timer/timer.component';
+import {Router} from '@angular/router';
 
 export class WorkoutComponent implements OnInit {
 
@@ -22,7 +23,7 @@ export class WorkoutComponent implements OnInit {
 
   constructor(
     wodConfigService: WodConfigService,
-    router: router
+    router: Router
   ) {
     this.wodConfigService = wodConfigService;
     this.router = router;
@@ -93,6 +94,11 @@ export class WorkoutComponent implements OnInit {
     } else {
       this.workoutComplete();
     }
+  }
+
+  exitWorkout() {
+    this.wodConfigService.resetWodSelectors();
+    this.router.navigate(['start']);
   }
 
 }
