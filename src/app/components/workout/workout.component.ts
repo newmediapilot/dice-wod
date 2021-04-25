@@ -38,18 +38,6 @@ export class WorkoutComponent implements OnInit {
     confetti.celebrate();
   }
 
-  get wodPercent() {
-    const {wodType} = this.formValues.wodParams;
-    const {wodPercentDone} = this.formValues.userData;
-
-    let percent = 0;
-
-    if ('time' == wodType && !this.isCountdown) percent = Math.round(this.timer.percent * 100);
-    if ('rounds' == wodType) percent = Math.round(wodPercentDone * 100);
-
-    return percent;
-  }
-
   get wodSetsDone() {
     return this.wodConfigService.formValues.userData.wodSetsDone.length;
   }
@@ -68,21 +56,23 @@ export class WorkoutComponent implements OnInit {
     }
   }
 
-  determineWodDuration() {
-    const {wodTime, wodType} = this.wodConfigService.formValues.wodParams;
-    return (wodType === 'time') ? wodTime : 9000;
+  timerStateCompleted() {
+    this.workoutComplete();
   }
 
+  // overwritten by descendant
   wodRoundsRemain() {
-    if (this.wodSetsLeft === 0) {
-      this.workoutComplete();
-      return false;
-    }
     return true;
   }
 
-  timerStateCompleted() {
-    this.workoutComplete();
+  // overwritten by descendant
+  determineWodDuration() {
+    return 0;
+  }
+
+  // overwritten by descendant
+  get wodPercent() {
+    return 0;
   }
 
   workoutComplete() {
@@ -95,8 +85,10 @@ export class WorkoutComponent implements OnInit {
     if (this.wodRoundsRemain()) {
       const {current, upcoming} = this.wodConfigService.fetchNextMovement();
       this.wodName = current.name;
-      if(upcoming) this.wodNameUpcoming = upcoming.name;
+      if (upcoming) this.wodNameUpcoming = upcoming.name;
       this.randomReps = current.reps.toString();
+    } else {
+      this.workoutComplete();
     }
   }
 
