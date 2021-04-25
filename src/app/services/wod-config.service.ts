@@ -177,8 +177,8 @@ export class WodConfigService {
       },
       {
         name: 'Spiderman Lunge',
-        min: 8,
-        max: 20
+        min: 6,
+        max: 14
       },
       {
         name: 'Step-Back Lunge',
@@ -218,6 +218,11 @@ export class WodConfigService {
       },
       {
         name: 'Sumo Dead-lift',
+        min: 5,
+        max: 15
+      },
+      {
+        name: 'Sumo High-Pull',
         min: 5,
         max: 15
       },
