@@ -85,6 +85,11 @@ export class WodConfigService {
         max: 10
       },
       {
+        name: 'Hindu Push Up',
+        min: 5,
+        max: 10
+      },
+      {
         name: 'Overhead Press',
         min: 5,
         max: 10
