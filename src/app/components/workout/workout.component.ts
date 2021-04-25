@@ -1,14 +1,8 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {WodConfigService} from '../../services/wod-config.service';
-import {TimerService} from '../../services/timer.service';
 import {ConfettiService} from '../../services/confetti.service';
 import {TimerComponent} from '../common/timer/timer.component';
 
-@Component({
-  selector: 'app-workout',
-  templateUrl: './workout.component.html',
-  styleUrls: ['./workout.component.scss']
-})
 export class WorkoutComponent implements OnInit {
 
   formValues = null;
@@ -20,13 +14,15 @@ export class WorkoutComponent implements OnInit {
   wodComplete = false;
   paused = true;
   wodType = '';
+  wodConfigService;
 
   @ViewChild(TimerComponent, {static: true}) appTimer: TimerComponent;
   @ViewChild('confetti', {static: true}) confettiRef: ElementRef;
 
   constructor(
-    private wodConfigService: WodConfigService
+    wodConfigService: WodConfigService
   ) {
+    this.wodConfigService = wodConfigService;
     this.formValues = wodConfigService.formValues;
     this.wodType = wodConfigService.formValues.wodParams.wodType;
   }

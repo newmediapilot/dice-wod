@@ -1,30 +1,33 @@
-<div class="row" #confetti>
-  <div class="col-12">
-    <h1 style="font-size: 17vw;" class="text-center font-monospace">
-      <app-timer
-        [duration]="determineWodDuration()"
-        (timerStateCompleted)="timerStateCompleted()"
-      ></app-timer>
+<div class="row row-cols-1" #confetti>
+  <div class="col">
+    <p>WOD Type: {{wodType}}</p>
+  </div>
+  <div class="col">
+    <h1 style="font-size: 12vw;" class="text-center font-monospace">
+      <b>
+        <app-timer
+          [duration]="determineWodDuration()"
+          (timerStateCompleted)="timerStateCompleted()"
+        ></app-timer>
+      </b>
     </h1>
   </div>
-  <div class="col-12 mt-4">
-    <div class="d-grid">
-      <button class="btn btn-primary btn-block btn-lg"
-              [disabled]="wodComplete"
-              (click)="appTimer.start()">
-        {{(appTimer.pausedState) ? 'start' : 'pause'}}
-      </button>
-    </div>
+  <div class="col mt-4">
+    <button class="btn btn-primary btn-block btn-lg"
+            [disabled]="wodComplete"
+            (click)="appTimer.start()">
+      {{(appTimer.pausedState) ? 'start' : 'pause'}}
+    </button>
   </div>
-  <div class="col-12 mt-4">
+  <div class="col mt-4">
     <p>Upcoming:</p>
     <h4>{{wodNameUpcoming}}</h4>
   </div>
-  <div class="col-12 mt-4">
+  <div class="col mt-4">
     <h1 style="font-size: 15vw;" class="text-center">{{this.randomReps}} reps</h1>
     <h2 style="font-size: 15vw;" class="text-center">{{this.wodName}}</h2>
   </div>
-  <div class="col-12 mt-4">
+  <div class="col mt-4">
     <div [ngStyle]="{
            'visibility':wodPercent>0?'visible':'hidden'
          }" class="progress">
@@ -36,10 +39,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="'time'==wodType" class="col-12 mt-4">
-    <h3 class="text-center">Sets done: {{wodSetsDone}}</h3>
-  </div>
-  <div *ngIf="'rounds'==wodType" class="col-12 mt-4">
+  <div class="col mt-4">
     <h3 class="text-center">Sets left: {{wodSetsLeft}}</h3>
   </div>
   <div class="col-4 mt-4">

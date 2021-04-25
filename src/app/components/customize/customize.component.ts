@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WodConfigService} from '../../services/wod-config.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-customize',
@@ -10,7 +11,9 @@ export class CustomizeComponent implements OnInit {
 
   formValues = null;
 
-  constructor(private wodConfigService: WodConfigService) {
+  constructor(
+    private router: Router,
+    private wodConfigService: WodConfigService) {
     this.formValues = wodConfigService.formValues;
 
     this.wodConfigService.generateCheckboxList();
@@ -33,6 +36,20 @@ export class CustomizeComponent implements OnInit {
   setWodSelection($event, t) {
     if (!this.wodConfigService.toggleSelectable(t)) {
       $event.preventDefault();
+    }
+  }
+
+  routeToWorkout() {
+    if (this.formValues.wodParams.wodType === 'time') {
+      console.log('CustomizeComponent::routeToWorkout::workout-time');
+
+      this.router.navigate(['/wod-time']);
+    }
+
+    if (this.formValues.wodParams.wodType === 'rounds') {
+      console.log('CustomizeComponent::routeToWorkout::workout-rounds');
+
+      this.router.navigate(['/wod-rounds']);
     }
   }
 

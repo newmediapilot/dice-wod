@@ -10,15 +10,18 @@ import {WodConfigService} from './services/wod-config.service';
 import { WorkoutComponent } from './components/workout/workout.component';
 import { IndexComponent } from './components/index/index.component';
 import { TimerComponent } from './components/common/timer/timer.component';
+import { WorkoutTimeComponent } from './components/workout-time/workout-time.component';
+import { WorkoutRoundsComponent } from './components/workout-rounds/workout-rounds.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StartComponent,
     CustomizeComponent,
-    WorkoutComponent,
     IndexComponent,
     TimerComponent,
+    WorkoutTimeComponent,
+    WorkoutRoundsComponent,
   ],
   imports: [
     BrowserModule,
