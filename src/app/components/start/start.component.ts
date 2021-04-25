@@ -18,9 +18,7 @@ export class StartComponent {
   setWodMode($event, t) {
     if (t === this.formValues.wodParams.wodType) $event.preventDefault();
 
-    // reset these for the interface to reset
-    this.formValues.wodParams.wodSets = undefined;
-    this.formValues.wodParams.wodTime = undefined;
+    this.wodConfigService.resetWodSelectors();
 
     this.formValues.wodParams.wodType = t;
   }

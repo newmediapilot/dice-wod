@@ -9,8 +9,8 @@ export class WodConfigService {
   formValues = {
     wodParams: {
       wodType: null, // time or reps
-      wodTime: 0, // seconds for wod to last
-      wodSets: 0, // sets for for to last
+      wodTime: 0, // seconds for wod to excludeMovement
+      wodSets: 0, // sets for for to excludeMovement
       wodSetsDone: 0, // sets completed
     },
     userData: {
@@ -244,7 +244,10 @@ export class WodConfigService {
       return array;
     })(),
     wodTimeAmounts: (() => {
-      const array = [{value: "undefined", label: "Select duration"}];
+      const array = [
+        {value: "undefined", label: "Select duration"},
+        {value: 1, label: "1 Second Test"}
+      ];
       for (let i = 1; i <= 20; i++) array.push({value: String(i * 5), label: `${i * 5} minutes`});
       return array;
     })(),
@@ -333,29 +336,44 @@ export class WodConfigService {
     userData.wodPercentDone = 0;
   }
 
+  /**
+   * resets selections for rounds/time dropdowns
+   */
+  resetWodSelectors(){
+    this.formValues.wodParams.wodSets = undefined;
+    this.formValues.wodParams.wodTime = undefined;
+    this.formValues.wodParams.wodType = undefined;
+  }
+
   selectRandomReps(move) {
-    const theMove = move;
-    let theReps = 0;
+    const movement = move;
+    let repNum = 0;
 
     // here we determine the minimum reps + random up to max reps
     // we use ceil because random will never reach the max without a push
-    theReps = Math.ceil(theMove.min + (Math.random() * (theMove.max - theMove.min)));
+    repNum = movement.min + Math.ceil(Math.random() * (movement.max - movement.min));
 
     // if a movement takes both arms or legs we make it an even number
-    if (theMove.symmetrical) {
-      theReps = Math.ceil(theReps / 2) * 2;
+    if (movement.symmetrical) {
+      repNum = Math.ceil((repNum / 2)) * 2
     }
 
-    return theReps;
+    return repNum;
   }
 
-  selectRandomMove() {
-    const randomSelector = Math.floor(Math.random() * this.formValues.wodTypeSelectorPool.length);
-    return this.formValues.wodTypeSelectorPool[randomSelector];
+  selectRandomMove(excludeMovement?) {
+    let pool = this.formValues.wodTypeSelectorPool;
+    if (excludeMovement) {
+      pool = _.filter(pool, (item) => {
+        return item.name !== excludeMovement.name;
+      });
+    }
+    const randomSelector = Math.floor(Math.random() * pool.length);
+    return pool[randomSelector];
   }
 
-  generateRandomMoveReps() {
-    const move = this.selectRandomMove();
+  generateRandomMoveReps(excludeMovement?) {
+    const move = this.selectRandomMove(excludeMovement);
     const reps = this.selectRandomReps(move);
     return {
       name: move.name,
@@ -374,17 +392,15 @@ export class WodConfigService {
     // next proposed movement
     let next = null;
     // last existing movement
-    let last = null;
+    let excludeMovement = null;
 
     // generate a random item - as long as it's different
-    // from the last item; we don't want repetitive work
+    // from the last item; we don't want back to back movements
     while (curr < maxRounds && this.formValues.wodTypeSelectorPool.length) {
-      last = _.last(movementPool);
-      next = this.generateRandomMoveReps();
-      if (last.name != next.name) {
-        movementPool.push(next);
-        curr++;
-      }
+      excludeMovement = _.last(movementPool);
+      next = this.generateRandomMoveReps(excludeMovement);
+      movementPool.push(next);
+      curr++;
     }
 
     // populate movement pool for "random generation"
