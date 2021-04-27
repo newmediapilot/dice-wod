@@ -41,6 +41,11 @@ export class SpeechService {
     }
   }
 
+  speak(speakThis){
+    const utterance = new SpeechSynthesisUtterance(speakThis);
+    window.speechSynthesis.speak(utterance);
+  }
+
   get transcript() {
     return this.subject;
   }
