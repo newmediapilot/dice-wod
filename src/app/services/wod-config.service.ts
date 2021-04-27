@@ -39,7 +39,7 @@ export class WodConfigService {
         max: 15
       },
       {
-        name: 'Bench',
+        name: 'Bench Press',
         min: 5,
         max: 15
       },
@@ -80,6 +80,11 @@ export class WodConfigService {
         max: 15
       },
       {
+        name: 'Ring Push Up',
+        min: 5,
+        max: 15
+      },
+      {
         name: 'Pike Push Up',
         min: 5,
         max: 10
@@ -110,9 +115,14 @@ export class WodConfigService {
         max: 10
       },
       {
+        name: 'Ring Row',
+        min: 5,
+        max: 15
+      },
+      {
         name: 'Pull Up',
         min: 5,
-        max: 10
+        max: 12
       },
       {
         name: 'Sit-up',
@@ -167,6 +177,11 @@ export class WodConfigService {
         min: 8,
         max: 20,
         symmetrical: true
+      },
+      {
+        name: 'Cradle Lunge',
+        min: 6,
+        max: 12
       },
       {
         name: 'Lunge',
@@ -236,6 +251,41 @@ export class WodConfigService {
         min: 4,
         max: 10,
         symmetrical: true
+      },
+      {
+        name: 'Renegade Row',
+        min: 6,
+        max: 14
+      },
+      {
+        name: 'Scorpion Reach',
+        min: 6,
+        max: 14
+      },
+      {
+        name: 'Bird Dog',
+        min: 6,
+        max: 14
+      },
+      {
+        name: 'Curtsy Lunge',
+        min: 6,
+        max: 14
+      },
+      {
+        name: 'Contralateral Dead-Bug',
+        min: 8,
+        max: 14
+      },
+      {
+        name: 'Kossack Squats',
+        min: 8,
+        max: 14
+      },
+      {
+        name: 'Scap Retractions',
+        min: 6,
+        max: 10
       },
     ],
     wodRepAmounts: (() => {
@@ -339,7 +389,7 @@ export class WodConfigService {
   /**
    * resets selections for rounds/time dropdowns
    */
-  resetWodSelectors(){
+  resetWodSelectors() {
     this.formValues.wodParams.wodSets = undefined;
     this.formValues.wodParams.wodTime = undefined;
     this.formValues.wodParams.wodType = undefined;
