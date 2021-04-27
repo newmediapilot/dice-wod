@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {WodConfigService} from '../../services/wod-config.service';
-import {ConfettiService} from '../../services/confetti.service';
 
 @Component({
   selector: 'app-start',
