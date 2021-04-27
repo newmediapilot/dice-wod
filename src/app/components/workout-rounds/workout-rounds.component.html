@@ -15,7 +15,7 @@
   <div class="col mt-4">
     <button class="btn btn-primary btn-block btn-lg"
             [disabled]="wodComplete"
-            (click)="appTimer.start()">
+            (click)="startWorkout()">
       {{(appTimer.pausedState) ? 'start' : 'pause'}}
     </button>
   </div>

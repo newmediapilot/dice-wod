@@ -12,9 +12,6 @@ import {Router} from '@angular/router';
 })
 export class WorkoutTimeComponent extends WorkoutComponent implements OnInit {
 
-  @ViewChild(TimerComponent, {static: true}) appTimer: TimerComponent;
-  @ViewChild('confetti', {static: true}) confettiRef: ElementRef;
-
   constructor(
     wodConfigService: WodConfigService,
     router: Router

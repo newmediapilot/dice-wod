@@ -3,6 +3,7 @@ import {WodConfigService} from '../../services/wod-config.service';
 import {ConfettiService} from '../../services/confetti.service';
 import {TimerComponent} from '../common/timer/timer.component';
 import {Router} from '@angular/router';
+import {SpeechService} from '../../services/speech.service';
 
 export class WorkoutComponent implements OnInit {
 
@@ -13,10 +14,13 @@ export class WorkoutComponent implements OnInit {
   timer = null;
   isCountdown = true;
   wodComplete = false;
+  wodStarted = false;
   paused = true;
   wodType = '';
   wodConfigService;
   router;
+  speechService;
+  speechUtterance;
 
   @ViewChild(TimerComponent, {static: true}) appTimer: TimerComponent;
   @ViewChild('confetti', {static: true}) confettiRef: ElementRef;
@@ -29,6 +33,7 @@ export class WorkoutComponent implements OnInit {
     this.router = router;
     this.formValues = wodConfigService.formValues;
     this.wodType = wodConfigService.formValues.wodParams.wodType;
+    this.speechService = new SpeechService();
   }
 
   ngOnInit() {
@@ -79,10 +84,27 @@ export class WorkoutComponent implements OnInit {
     return 0;
   }
 
+  startWorkout() {
+    console.log('WorkoutComponent::startWorkout');
+    if (!this.wodStarted) {
+      // initialize speech recognition
+      this.speakMovement('get ready for the first movement');
+      this.speakMovement(this.speechUtterance);
+      this.wodStarted = true;
+    }
+    this.appTimer.start();
+  }
+
   workoutComplete() {
     this.wodComplete = true;
     this.appTimer.start(); // pauses
     this.celebrate();
+    this.speakMovement("workout complete. well done.");
+  }
+
+  speakMovement(utterance) {
+    console.log('WorkoutComponent::speakMovement::', utterance);
+    this.speechService.speak(utterance);
   }
 
   fetchNextMovement() {
@@ -91,6 +113,10 @@ export class WorkoutComponent implements OnInit {
       this.wodName = current.name;
       if (upcoming) this.wodNameUpcoming = upcoming.name;
       this.randomReps = current.reps.toString();
+      this.speechUtterance = [current.reps, current.name].join(' ');
+      if (this.wodStarted) {
+        this.speakMovement(this.speechUtterance);
+      }
     } else {
       this.workoutComplete();
     }

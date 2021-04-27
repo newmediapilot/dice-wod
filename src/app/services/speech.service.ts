@@ -41,8 +41,10 @@ export class SpeechService {
     }
   }
 
-  speak(speakThis){
+  speak(speakThis) {
     const utterance = new SpeechSynthesisUtterance(speakThis);
+    utterance.rate = 0.8;
+    utterance.pitch = 1; //0 to 2
     window.speechSynthesis.speak(utterance);
   }
 
