@@ -5,7 +5,7 @@ import {TimerComponent} from '../common/timer/timer.component';
 import {Router} from '@angular/router';
 import {SpeechService} from '../../services/speech.service';
 
-export class WorkoutComponent implements OnInit {
+export class WorkoutComponent implements OnInit, OnDestroy {
 
   formValues = null;
   wodName = '';
@@ -40,6 +40,40 @@ export class WorkoutComponent implements OnInit {
     this.wodConfigService.resetSets();
     this.prepareMovements();
     this.fetchNextMovement();
+    this.startListening();
+  }
+
+  ngOnDestroy(): void {
+    this.speechService.transcript.unsubscribe();
+    this.speechService.stop();
+  }
+
+  startListening() {
+    console.log('WorkoutComponent::startListening');
+    this.speechService.transcript.subscribe((item) => {
+      this.listenSpeech(item.word);
+    });
+    this.speechService.start();
+  }
+
+  listenSpeech(word) {
+    console.log('WorkoutComponent::listenSpeech::', word);
+    if ([
+      'next',
+      'done',
+      'resume',
+      'continue',
+      'go',
+      'movement',
+      'start',
+      'finish',
+      'finished',
+      'ready'
+    ].includes(word)) {
+      if (!this.appTimer.isCountdown && !this.appTimer.pausedState) {
+        this.fetchNextMovement();
+      }
+    }
   }
 
   celebrate() {
