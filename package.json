@@ -1,13 +1,14 @@
 {
   "name": "dice-wod",
-  "version": "1.0.0-a7",
+  "version": "1.0.0-a8",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "changelog": "generate-changelog -a 1.0.0-a7..1.0.0-a8"
   },
   "private": true,
   "dependencies": {
