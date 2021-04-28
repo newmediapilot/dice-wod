@@ -29,7 +29,7 @@ export class SpeechService {
       const raw = _.last(event.results)[0].transcript;
       const trim = raw.trim();
       const array = trim.split(' ');
-      const word = _.last(array);
+      const word = (_.last(array) as String).toLowerCase();
       const payload = {
         raw,
         trim,
@@ -41,11 +41,14 @@ export class SpeechService {
     }
   }
 
-  speak(speakThis) {
+  speak(speakThis, cb?) {
     const utterance = new SpeechSynthesisUtterance(speakThis);
     utterance.rate = 0.8;
     utterance.pitch = 1; //0 to 2
-    window.speechSynthesis.speak(utterance);
+    utterance.onend = () => {
+      if (cb) cb();
+    };
+    window.speechSynthesis.speak(utterance)
   }
 
   get transcript() {

@@ -49,31 +49,23 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   }
 
   startListening() {
-    console.log('WorkoutComponent::startListening');
     this.speechService.transcript.subscribe((item) => {
-      this.listenSpeech(item.word);
+      console.log('WorkoutComponent::speechService::item', item);
+      if ([
+        'done',
+        'next',
+        'continue',
+        'complete',
+        'finished',
+        'ready',
+      ].includes(item.word)) {
+        if (!this.appTimer.isCountdown && !this.appTimer.pausedState) {
+          this.fetchNextMovement();
+        }
+      }
     });
     this.speechService.start();
-  }
-
-  listenSpeech(word) {
-    console.log('WorkoutComponent::listenSpeech::', word);
-    if ([
-      'next',
-      'done',
-      'resume',
-      'continue',
-      'go',
-      'movement',
-      'start',
-      'finish',
-      'finished',
-      'ready'
-    ].includes(word)) {
-      if (!this.appTimer.isCountdown && !this.appTimer.pausedState) {
-        this.fetchNextMovement();
-      }
-    }
+    console.log('WorkoutComponent::startListening');
   }
 
   celebrate() {
@@ -137,8 +129,10 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   }
 
   speakMovement(utterance) {
-    console.log('WorkoutComponent::speakMovement::', utterance);
-    this.speechService.speak(utterance);
+    console.log('WorkoutComponent::speakMovement', utterance);
+    this.speechService.speak(utterance, () => {
+      console.log('WorkoutComponent::speakMovement::done', utterance);
+    });
   }
 
   fetchNextMovement() {
