@@ -181,7 +181,8 @@ export class WodConfigService {
       {
         name: 'Cradle Lunge',
         min: 6,
-        max: 12
+        max: 12,
+        symmetrical: true
       },
       {
         name: 'Lunge',
@@ -255,22 +256,26 @@ export class WodConfigService {
       {
         name: 'Renegade Row',
         min: 6,
-        max: 14
+        max: 14,
+        symmetrical: true
       },
       {
         name: 'Scorpion Reach',
         min: 6,
-        max: 14
+        max: 14,
+        symmetrical: true
       },
       {
         name: 'Bird Dog',
         min: 6,
-        max: 14
+        max: 14,
+        symmetrical: true
       },
       {
         name: 'Curtsy Lunge',
         min: 6,
-        max: 14
+        max: 14,
+        symmetrical: true
       },
       {
         name: 'Contralateral Dead-Bug',
@@ -280,10 +285,16 @@ export class WodConfigService {
       {
         name: 'Kossack Squats',
         min: 8,
-        max: 14
+        max: 14,
+        symmetrical: true
       },
       {
         name: 'Scap Retractions',
+        min: 6,
+        max: 10
+      },
+      {
+        name: 'Alternating Snatch',
         min: 6,
         max: 10
       },
