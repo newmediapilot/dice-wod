@@ -12,7 +12,7 @@ export class TimerComponent implements OnInit {
   timerDuration: number = 0;
   countdown: number = 10;
   isCountdown: boolean = true;
-  pausedState: boolean = true;
+  isPaused: boolean = true;
 
   @Output() pauseStateChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() timerStateCompleted: EventEmitter<TimerService> = new EventEmitter<TimerService>();
@@ -36,11 +36,28 @@ export class TimerComponent implements OnInit {
     });
   }
 
-  start() {
-    (this.pausedState) ? this.timer.start() : this.timer.stop();
-    this.pausedState = !this.pausedState;
+  get pausedState() {
+    return this.isPaused;
+  }
 
-    this.pauseStateChanged.emit(this.pausedState);
+  pause() {
+    this.timer.stop();
+    this.isPaused = true;
+    this.pauseStateChanged.emit(this.isPaused);
+  }
+
+  resume() {
+    this.timer.start();
+    this.isPaused = false;
+    this.pauseStateChanged.emit(this.isPaused);
+  }
+
+  toggle() {
+    if (this.isPaused) {
+      this.resume();
+    } else {
+      this.pause();
+    }
   }
 
   begin() {

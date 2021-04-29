@@ -49,26 +49,36 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   }
 
   startListening() {
-    this.speechService.transcript.subscribe((item) => {
-      console.log('WorkoutComponent::speechService::item', item);
-      if ([
-        'done',
-        'next',
-        'continue',
-        'complete',
-        'finished',
-        'ready',
-      ].includes(item.word)) {
-        if (!this.appTimer.isCountdown && !this.appTimer.pausedState) {
+    console.log('WorkoutComponent::startListening');
+
+    this.speechService.transcript.subscribe((payload) => {
+      console.log('WorkoutComponent::speechService::item', payload);
+      if (SpeechService.SPEECH_EVENT.NextMovement === payload.type) {
+        if (
+          !this.appTimer.isCountdown &&
+          !this.appTimer.pausedState
+        ) {
           this.fetchNextMovement();
         }
       }
+      if (SpeechService.SPEECH_EVENT.PauseTimer === payload.type) {
+        this.appTimer.pause();
+      }
+      if (SpeechService.SPEECH_EVENT.ResumeTimer === payload.type) {
+        if (!this.wodStarted) {
+          this.startWorkout();
+        } else {
+          this.appTimer.resume();
+        }
+      }
     });
+
     this.speechService.start();
     console.log('WorkoutComponent::startListening');
   }
 
   celebrate() {
+    console.log('WorkoutComponent::celebrate');
     const confetti = new ConfettiService(this.confettiRef.nativeElement);
     confetti.celebrate();
   }
@@ -82,6 +92,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   }
 
   prepareMovements() {
+    console.log('WorkoutComponent::prepareMovements');
     const {wodType} = this.wodConfigService.formValues.wodParams;
     const {wodSets} = this.wodConfigService.formValues.wodParams;
     if (wodType === 'time') {
@@ -118,12 +129,12 @@ export class WorkoutComponent implements OnInit, OnDestroy {
       this.speakMovement(this.speechUtterance);
       this.wodStarted = true;
     }
-    this.appTimer.start();
+    this.appTimer.toggle();
   }
 
   workoutComplete() {
     this.wodComplete = true;
-    this.appTimer.start(); // pauses
+    this.appTimer.pause(); // pauses
     this.celebrate();
     this.speakMovement("workout complete. well done.");
   }

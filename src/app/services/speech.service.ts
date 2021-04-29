@@ -14,6 +14,12 @@ const recognition = new webkitSpeechRecognition();
 })
 export class SpeechService {
 
+  static SPEECH_EVENT = {
+    NextMovement: 'SPEECH_EVENT::NextMovement',
+    PauseTimer: 'SPEECH_EVENT::PauseTimer',
+    ResumeTimer: 'SPEECH_EVENT::ResumeTimer'
+  };
+
   text = [];
   subject = new Subject();
   isListening;
@@ -37,8 +43,57 @@ export class SpeechService {
         word,
       };
       this.text.push(payload);
-      this.subject.next(payload);
+      this.subject.next(
+        this.interpret(payload)
+      );
+      setTimeout(() => {
+        console.log('SpeechService::tick');
+      }, 1);
+    };
+    /**
+     * this is necessary because speech recognition
+     * turns off automatically, we reset it again
+     */
+    recognition.onend = () => {
+      if (this.isListening) {
+        this.start();
+      }
     }
+  }
+
+  interpret(payload) {
+    if ([
+      'done',
+      'next',
+      'finished',
+    ].includes(payload.word)) {
+      return {
+        type: SpeechService.SPEECH_EVENT.NextMovement,
+        ...payload
+      };
+    }
+    if ([
+      'stop',
+      'pause',
+      'wait',
+      'break',
+    ].includes(payload.word)) {
+      return {
+        type: SpeechService.SPEECH_EVENT.PauseTimer,
+        ...payload
+      };
+    }
+    if ([
+      'start',
+      'play',
+      'go',
+    ].includes(payload.word)) {
+      return {
+        type: SpeechService.SPEECH_EVENT.ResumeTimer,
+        ...payload
+      };
+    }
+    return payload;
   }
 
   speak(speakThis, cb?) {
@@ -48,7 +103,7 @@ export class SpeechService {
     utterance.onend = () => {
       if (cb) cb();
     };
-    window.speechSynthesis.speak(utterance)
+    window.speechSynthesis.speak(utterance);
   }
 
   get transcript() {
