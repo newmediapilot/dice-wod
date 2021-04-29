@@ -1,7 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {TimerComponent} from '../common/timer/timer.component';
 import {WodConfigService} from '../../services/wod-config.service';
-import {ConfettiService} from '../../services/confetti.service';
 import {WorkoutComponent} from '../workout/workout.component';
 import {Router} from '@angular/router';
 
