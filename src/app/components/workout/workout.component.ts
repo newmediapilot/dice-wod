@@ -175,7 +175,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
 
   exitWorkout() {
     this.wodConfigService.resetWodSelectors();
-    this.router.navigate(['start']);
+    this.router.navigate(['summary']);
   }
 
 }
