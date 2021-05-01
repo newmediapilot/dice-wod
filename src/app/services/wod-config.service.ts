@@ -376,19 +376,6 @@ export class WodConfigService {
     });
   }
 
-  incrementWodSetsDone() {
-    this.formValues.wodParams.wodSetsDone += 1;
-  }
-
-  updateSetsDone(wodElement) {
-    const {userData} = this.formValues;
-    const {wodSets} = this.formValues.wodParams;
-    userData.currentWorkout = wodElement;
-    userData.wodSetsDone.push(wodElement);
-    userData.wodSetsLength = userData.wodSetsDone.length;
-    userData.wodPercentDone = (userData.wodSetsLength - 1) / wodSets;
-  }
-
   /**
    * reset user counts for rounds/reps
    */
