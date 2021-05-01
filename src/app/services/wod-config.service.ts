@@ -28,279 +28,330 @@ export class WodConfigService {
     // master list, never modified only copied
     wodTypes: [
       {
-        name: 'Shoulder Tap',
-        min: 6,
-        max: 20,
-        symmetrical: true
+        "name": "Air Squat",
+        "min": 10,
+        "max": 30,
+        "key": "air_squat"
       },
       {
-        name: 'Dead-lift',
-        min: 5,
-        max: 15
+        "name": "Alternating Snatch",
+        "min": 6,
+        "max": 10,
+        "symmetrical": true,
+        "key": "alternating_snatch"
       },
       {
-        name: 'Bench Press',
-        min: 5,
-        max: 15
+        "name": "Athletic Burpee",
+        "min": 5,
+        "max": 15,
+        "key": "athletic_burpee"
       },
       {
-        name: 'Snatch',
-        min: 3,
-        max: 9
+        "name": "Athletic Jump",
+        "min": 10,
+        "max": 30,
+        "symmetrical": true,
+        "key": "athletic_jump"
       },
       {
-        name: 'Front Squat',
-        min: 5,
-        max: 10
+        "name": "Back Squat",
+        "key": "back_squat",
+        "min": 5,
+        "max": 10
       },
       {
-        name: 'Back Squat',
-        min: 5,
-        max: 10
+        "name": "Bench Press",
+        "key": "bench_press",
+        "min": 5,
+        "max": 15
       },
       {
-        name: 'Clean',
-        min: 3,
-        max: 9
+        "name": "Bent Over Row",
+        "min": 5,
+        "max": 10,
+        "key": "bent_over_row"
       },
       {
-        name: 'Clean & Jerk',
-        min: 3,
-        max: 6
+        "name": "Bird Dog",
+        "min": 6,
+        "max": 14,
+        "symmetrical": true,
+        "key": "bird_dog"
       },
       {
-        name: 'Mountain Climber',
-        min: 8,
-        max: 20,
-        symmetrical: true
+        "name": "Burpee",
+        "min": 5,
+        "max": 15,
+        "key": "burpee"
       },
       {
-        name: 'Push Up',
-        min: 5,
-        max: 15
+        "name": "Clean",
+        "min": 3,
+        "max": 9,
+        "key": "clean"
       },
       {
-        name: 'Ring Push Up',
-        min: 5,
-        max: 15
+        "name": "Clean & Jerk",
+        "min": 3,
+        "max": 6,
+        "key": "clean_&_jerk"
       },
       {
-        name: 'Pike Push Up',
-        min: 5,
-        max: 10
+        "name": "Contralateral Dead-Bug",
+        "min": 8,
+        "max": 14,
+        "symmetrical": true,
+        "key": "contralateral_dead_bug"
       },
       {
-        name: 'Hindu Push Up',
-        min: 5,
-        max: 10
+        "name": "Cradle Lunge",
+        "min": 6,
+        "max": 12,
+        "symmetrical": true,
+        "key": "cradle_lunge"
       },
       {
-        name: 'Overhead Press',
-        min: 5,
-        max: 10
+        "name": "Curtsy Lunge",
+        "min": 6,
+        "max": 14,
+        "symmetrical": true,
+        "key": "curtsy_lunge"
       },
       {
-        name: 'Handstand Push Up',
-        min: 5,
-        max: 10
+        "name": "Dead-lift",
+        "key": "dead_lift",
+        "min": 5,
+        "max": 15
       },
       {
-        name: 'Pull Down',
-        min: 5,
-        max: 15
+        "name": "Devil Press",
+        "min": 5,
+        "max": 15,
+        "key": "devil_press"
       },
       {
-        name: 'Bent Over Row',
-        min: 5,
-        max: 10
+        "name": "Front Squat",
+        "key": "front_squat",
+        "min": 5,
+        "max": 10
       },
       {
-        name: 'Ring Row',
-        min: 5,
-        max: 15
+        "name": "Good Morning",
+        "min": 5,
+        "max": 15,
+        "key": "good_morning"
       },
       {
-        name: 'Pull Up',
-        min: 5,
-        max: 12
+        "name": "Handstand Push Up",
+        "min": 5,
+        "max": 10,
+        "key": "handstand_push_up"
       },
       {
-        name: 'Sit-up',
-        min: 10,
-        max: 15
+        "name": "Hanging Leg Raise",
+        "min": 5,
+        "max": 15,
+        "key": "hanging_leg_raise"
       },
       {
-        name: 'V-Up',
-        min: 5,
-        max: 15
+        "name": "Hindu Push Up",
+        "min": 5,
+        "max": 10,
+        "key": "hindu_push_up"
       },
       {
-        name: 'Hanging Leg Raise',
-        min: 5,
-        max: 15
+        "name": "Jumping Jack",
+        "min": 15,
+        "max": 30,
+        "key": "jumping_jack"
       },
       {
-        name: 'Standing Leg Raise',
-        min: 10,
-        max: 30,
-        symmetrical: true
+        "name": "Jumping Lunge",
+        "min": 10,
+        "max": 30,
+        "symmetrical": true,
+        "key": "jumping_lunge"
       },
       {
-        name: 'Knee to Elbow',
-        min: 5,
-        max: 15
+        "name": "Knee to Elbow",
+        "min": 5,
+        "max": 15,
+        "key": "knee_to_elbow"
       },
       {
-        name: 'Toe to Bar',
-        min: 5,
-        max: 15
+        "name": "Kossack Squats",
+        "min": 8,
+        "max": 14,
+        "symmetrical": true,
+        "key": "kossack_squats"
       },
       {
-        name: 'Jumping Jack',
-        min: 15,
-        max: 30
+        "name": "Lunge",
+        "min": 10,
+        "max": 30,
+        "symmetrical": true,
+        "key": "lunge"
       },
       {
-        name: 'Athletic Jump',
-        min: 10,
-        max: 30,
-        symmetrical: true
+        "name": "Mountain Climber",
+        "min": 8,
+        "max": 20,
+        "symmetrical": true,
+        "key": "mountain_climber"
       },
       {
-        name: 'Windmill',
-        min: 8,
-        max: 20,
-        symmetrical: true
+        "name": "Overhead Press",
+        "min": 5,
+        "max": 10,
+        "key": "overhead_press"
       },
       {
-        name: 'Russian Twist',
-        min: 8,
-        max: 20,
-        symmetrical: true
+        "name": "Pike Push Up",
+        "min": 5,
+        "max": 10,
+        "key": "pike_push_up"
       },
       {
-        name: 'Cradle Lunge',
-        min: 6,
-        max: 12,
-        symmetrical: true
+        "name": "Pull Down",
+        "min": 5,
+        "max": 15,
+        "key": "pull_down"
       },
       {
-        name: 'Lunge',
-        min: 10,
-        max: 30,
-        symmetrical: true
+        "name": "Pull Up",
+        "min": 5,
+        "max": 12,
+        "key": "pull_up"
       },
       {
-        name: 'Jumping Lunge',
-        min: 10,
-        max: 30,
-        symmetrical: true
+        "name": "Push Up",
+        "min": 5,
+        "max": 15,
+        "key": "push_up"
       },
       {
-        name: 'Spiderman Lunge',
-        min: 6,
-        max: 14,
-        symmetrical: true
+        "name": "Renegade Row",
+        "min": 6,
+        "max": 14,
+        "symmetrical": true,
+        "key": "renegade_row"
       },
       {
-        name: 'Step-Back Lunge',
-        min: 10,
-        max: 30,
-        symmetrical: true
+        "name": "Ring Push Up",
+        "min": 5,
+        "max": 15,
+        "key": "ring_push_up"
       },
       {
-        name: 'Air Squat',
-        min: 10,
-        max: 30
+        "name": "Ring Row",
+        "min": 5,
+        "max": 15,
+        "key": "ring_row"
       },
       {
-        name: 'Athletic Burpee',
-        min: 5,
-        max: 15
+        "name": "Russian Dead-lift",
+        "min": 5,
+        "max": 15,
+        "key": "russian_dead_lift"
       },
       {
-        name: 'Burpee',
-        min: 5,
-        max: 15
+        "name": "Russian Twist",
+        "min": 8,
+        "max": 20,
+        "symmetrical": true,
+        "key": "russian_twist"
       },
       {
-        name: 'Devil Press',
-        min: 5,
-        max: 15
+        "name": "Scap Retractions",
+        "min": 6,
+        "max": 10,
+        "key": "scap_retractions"
       },
       {
-        name: 'Good Morning',
-        min: 5,
-        max: 15
+        "name": "Scorpion Reach",
+        "min": 6,
+        "max": 14,
+        "symmetrical": true,
+        "key": "scorpion_reach"
       },
       {
-        name: 'Russian Dead-lift',
-        min: 5,
-        max: 15
+        "name": "Shoulder Tap",
+        "key": "shoulder_tap",
+        "min": 6,
+        "max": 20,
+        "symmetrical": true
       },
       {
-        name: 'Sumo Dead-lift',
-        min: 5,
-        max: 15
+        "name": "Sit-up",
+        "min": 10,
+        "max": 15,
+        "key": "sit_up"
       },
       {
-        name: 'Sumo High-Pull',
-        min: 5,
-        max: 15
+        "name": "Snatch",
+        "key": "snatch",
+        "min": 3,
+        "max": 9
       },
       {
-        name: 'Turkish Get-up',
-        min: 4,
-        max: 10,
-        symmetrical: true
+        "name": "Spiderman Lunge",
+        "min": 6,
+        "max": 14,
+        "symmetrical": true,
+        "key": "spiderman_lunge"
       },
       {
-        name: 'Renegade Row',
-        min: 6,
-        max: 14,
-        symmetrical: true
+        "name": "Standing Leg Raise",
+        "min": 10,
+        "max": 30,
+        "symmetrical": true,
+        "key": "standing_leg_raise"
       },
       {
-        name: 'Scorpion Reach',
-        min: 6,
-        max: 14,
-        symmetrical: true
+        "name": "Step-Back Lunge",
+        "min": 10,
+        "max": 30,
+        "symmetrical": true,
+        "key": "step_back_lunge"
       },
       {
-        name: 'Bird Dog',
-        min: 6,
-        max: 14,
-        symmetrical: true
+        "name": "Sumo Dead-lift",
+        "min": 5,
+        "max": 15,
+        "key": "sumo_dead_lift"
       },
       {
-        name: 'Curtsy Lunge',
-        min: 6,
-        max: 14,
-        symmetrical: true
+        "name": "Sumo High-Pull",
+        "min": 5,
+        "max": 15,
+        "key": "sumo_high_pull"
       },
       {
-        name: 'Contralateral Dead-Bug',
-        min: 8,
-        max: 14,
-        symmetrical: true
+        "name": "Toe to Bar",
+        "min": 5,
+        "max": 15,
+        "key": "toe_to_bar"
       },
       {
-        name: 'Kossack Squats',
-        min: 8,
-        max: 14,
-        symmetrical: true
+        "name": "Turkish Get-up",
+        "min": 4,
+        "max": 10,
+        "symmetrical": true,
+        "key": "turkish_get_up"
       },
       {
-        name: 'Scap Retractions',
-        min: 6,
-        max: 10
+        "name": "V-Up",
+        "min": 5,
+        "max": 15,
+        "key": "v_up"
       },
       {
-        name: 'Alternating Snatch',
-        min: 6,
-        max: 10,
-        symmetrical: true
-      },
+        "name": "Windmill",
+        "min": 8,
+        "max": 20,
+        "symmetrical": true,
+        "key": "windmill"
+      }
     ],
     wodRepAmounts: (() => {
       const array = [{value: "undefined", label: "Select reps"}];
@@ -325,6 +376,23 @@ export class WodConfigService {
     if (!this.formValues.wodTypesSelectables.length) {
       this.formValues.wodTypesSelectables = JSON.parse(JSON.stringify(this.formValues.wodTypes));
     }
+  }
+
+  debug() {
+    let wodList = this.formValues.wodTypes;
+    wodList = _.map(wodList, (item) => {
+      item.key = item.name.toLowerCase();
+      item.key = item.key.replace(/\s/g, '_')
+      item.key = item.key.replace(/\-/, '_');
+      return item;
+    });
+    wodList = _.sortBy(wodList, (item) => {
+      return item.key;
+    });
+    for (let i in wodList) {
+      console.log(wodList[i]);
+    }
+    console.log(JSON.stringify(wodList, null, 2));
   }
 
   /**
@@ -427,7 +495,7 @@ export class WodConfigService {
     const move = this.selectRandomMove(excludeMovement);
     const reps = this.selectRandomReps(move);
     return {
-      name: move.name,
+      ...move,
       reps: reps
     }
   }

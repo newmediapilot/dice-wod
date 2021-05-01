@@ -5,6 +5,7 @@ import {CustomizeComponent} from './components/customize/customize.component';
 import {WorkoutComponent} from './components/workout/workout.component';
 import {WorkoutRoundsComponent} from './components/workout-rounds/workout-rounds.component';
 import {WorkoutTimeComponent} from './components/workout-time/workout-time.component';
+import {SummaryComponent} from './components/summary/summary.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'wod-time',
     component: WorkoutTimeComponent
+  },
+  {
+    path: 'summary',
+    component: SummaryComponent
   },
   {path: '**', redirectTo: 'start'}
 ];
