@@ -1,9 +1,38 @@
-<p>Here's your summary</p>
-<div class="row">
-  <div class="col-12">
-    <div class="row">
-      <div class="col-12">
-      </div>
+<div class="row row-cols-1">
+
+  <div class="row">
+    <div class="col-12">
+      <h1>Summary:</h1>
     </div>
   </div>
+
+  <div *ngFor="let category of wodCategoriesList" class="row">
+    <div class="col-12">
+      <h2><b>{{category.name}}</b></h2>
+    </div>
+    <div class="col-12">
+      <h3>Reps Done: {{category.reps}}</h3>
+    </div>
+    <div class="col-12">
+      <h3>Avg. Rep Time: {{category.timeAverage.label}}</h3>
+    </div>
+    <div class="col-12">
+      <h3>Round Time: {{category.timeDuration.label}}</h3>
+    </div>
+    <hr>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h1>Movements:</h1>
+    </div>
+  </div>
+
+  <div *ngFor="let wod of wodList" class="row">
+    <div class="col-12">
+      <h2>{{wod.reps}} {{wod.name}}</h2>
+      <hr>
+    </div>
+  </div>
+
 </div>

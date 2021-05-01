@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {WodConfigService} from '../../services/wod-config.service';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-summary',
@@ -12,6 +13,7 @@ export class SummaryComponent implements OnInit {
 
   wodList;
   wodCategories;
+  wodCategoriesList;
 
   constructor(
     private wodConfigService: WodConfigService,
@@ -83,15 +85,24 @@ export class SummaryComponent implements OnInit {
 
   processSummary() {
     this.wodCategories = {};
+    this.wodCategoriesList = [];
 
     for (let i = 0; i < this.wodList.length; i++) {
       const item = this.wodList[i];
 
       if (!this.wodCategories[item.key]) {
         this.wodCategories[item.key] = {
-          reps: 0,
           key: item.key,
           name: item.name,
+          reps: 0,
+          timeDuration: {
+            raw: 0,
+            label: null,
+          },
+          timeAverage: {
+            raw: 0,
+            label: null,
+          },
           list: [],
         };
       }
@@ -99,13 +110,27 @@ export class SummaryComponent implements OnInit {
       const category = this.wodCategories[item.key];
 
       category.reps += item.reps;
-      category.timeDuration += item.timeDuration.raw;
+
+      category.timeDuration.raw += item.timeDuration.raw;
+      category.timeDuration.label = moment(category.timeDuration.raw).format('mm:ss:SSS').toString();
+
+      category.timeAverage.raw = Math.floor(category.timeDuration.raw / category.reps);
+      category.timeAverage.label = moment(category.timeAverage.raw).format('mm:ss:SSS').toString();
 
       category.list.push(item);
     }
+
+    for (let j in this.wodCategories) {
+      this.wodCategoriesList.push(this.wodCategories[j]);
+    }
+
+    this.wodCategoriesList = _.sortBy(this.wodCategoriesList, (item) => {
+      return item.name;
+    });
+
+    console.log('SummaryComponent::wodCategories', this.wodCategories);
+    console.log('SummaryComponent::wodCategoriesList', this.wodCategoriesList);
   }
-
-
 
   exitSummary() {
     this.router.navigate(['start']);
