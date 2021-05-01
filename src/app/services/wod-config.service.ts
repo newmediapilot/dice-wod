@@ -199,7 +199,8 @@ export class WodConfigService {
       {
         name: 'Spiderman Lunge',
         min: 6,
-        max: 14
+        max: 14,
+        symmetrical: true
       },
       {
         name: 'Step-Back Lunge',
@@ -280,7 +281,8 @@ export class WodConfigService {
       {
         name: 'Contralateral Dead-Bug',
         min: 8,
-        max: 14
+        max: 14,
+        symmetrical: true
       },
       {
         name: 'Kossack Squats',
@@ -296,7 +298,8 @@ export class WodConfigService {
       {
         name: 'Alternating Snatch',
         min: 6,
-        max: 10
+        max: 10,
+        symmetrical: true
       },
     ],
     wodRepAmounts: (() => {
