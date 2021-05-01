@@ -495,6 +495,18 @@ export class WodConfigService {
   }
 
   /**
+   * timestamps for the absolute last movement
+   */
+  triggerFinalMovementDone() {
+    console.log('WodConfigService::triggerFinalMovementDone');
+
+    const previous = this.formValues.userData.wodSetsDone[this.formValues.userData.wodSetsDone.length - 2];
+    const final = _.last(this.formValues.userData.wodSetsDone);
+    final.timeComplete = this.generateTimeStamp(new Date().getTime());
+    final.timeDuration = this.generateTimeStamp(new Date().getTime() - previous.timeStarted.raw);
+  }
+
+  /**
    * fetch one random wod from generated
    * pool @see generateRandomWODs(number)
    */

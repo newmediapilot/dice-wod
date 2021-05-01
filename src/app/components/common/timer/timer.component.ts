@@ -16,6 +16,7 @@ export class TimerComponent implements OnInit {
 
   @Output() pauseStateChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() timerStateCompleted: EventEmitter<TimerService> = new EventEmitter<TimerService>();
+  @Output() timerStateCountingUp: EventEmitter<TimerService> = new EventEmitter<TimerService>();
   @Input()
   set duration(timerDuration) {
     this.timerDuration = timerDuration;
@@ -67,6 +68,7 @@ export class TimerComponent implements OnInit {
       this.done();
     });
     this.timer.start();
+    this.timerStateCountingUp.emit(this.timer);
   }
 
   get time() {
@@ -77,7 +79,6 @@ export class TimerComponent implements OnInit {
 
   done() {
     console.log("TimerComponent::done");
-
     this.timerStateCompleted.emit(this.timer);
   }
 

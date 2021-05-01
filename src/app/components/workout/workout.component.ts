@@ -121,13 +121,18 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     return 0;
   }
 
+  timerStateCountingStarted() {
+    console.log('WorkoutComponent::timerStateCountingStarted');
+
+    this.wodConfigService.triggerCurrentMovementStarted();
+  }
+
   startWorkout() {
     console.log('WorkoutComponent::startWorkout');
     if (!this.wodStarted) {
       // initialize speech recognition
       this.speakMovement('get ready for the first movement');
       this.speakMovement(this.speechUtterance);
-      this.wodConfigService.triggerCurrentMovementStarted();
       this.wodStarted = true;
     }
     this.appTimer.toggle();
@@ -138,6 +143,10 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     this.appTimer.pause(); // pauses
     this.celebrate();
     this.speakMovement("workout complete. well done.");
+
+    this.wodConfigService.triggerFinalMovementDone();
+
+    console.log('WorkoutComponent::workoutComplete', this.wodConfigService.formValues.userData.wodSetsDone);
   }
 
   speakMovement(utterance) {
