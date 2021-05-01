@@ -1,4 +1,25 @@
-#### 1.0.0-a8 (2021-04-28)
+#### 1.0.0-a9 (2021-05-01)
+
+##### Chores
+
+*  cleanup some imports (66262a22)
+
+##### Other Changes (feature)
+
+*  create summary screen (c7eaf659)
+*  adding summary data (ca5f4518)
+*  app now records timestamps in memory for summary (743c5b45)
+*  add stamps to current and previous movements (331cc4c0)
+*  add some additional symmetrical values (c4c47d06)
+*  improve speech recognition, finesse vocab, refactor code style (65f6af2d)
+*  adjust workout numbers and symmetry (3f3cdb78)
+
+##### Refactors
+
+*  cleanup object and add debug funct (2d77fca0)
+*  not using these (e5593e4e)
+
+#### 1.0.0-a9 (2021-04-28)
 
 ##### Chores
 
