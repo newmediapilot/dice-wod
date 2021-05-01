@@ -127,6 +127,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
       // initialize speech recognition
       this.speakMovement('get ready for the first movement');
       this.speakMovement(this.speechUtterance);
+      this.wodConfigService.triggerCurrentMovementStarted();
       this.wodStarted = true;
     }
     this.appTimer.toggle();
@@ -149,6 +150,8 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   fetchNextMovement() {
     if (this.wodRoundsRemain()) {
       const {current, upcoming} = this.wodConfigService.fetchNextMovement();
+      this.wodConfigService.triggerCurrentMovementStarted();
+      this.wodConfigService.triggerPreviousMovementDone();
       this.wodName = current.name;
       if (upcoming) this.wodNameUpcoming = upcoming.name;
       this.randomReps = current.reps.toString();

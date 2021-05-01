@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,6 @@ export class WodConfigService {
       wodType: null, // time or reps
       wodTime: 0, // seconds for wod to excludeMovement
       wodSets: 0, // sets for for to excludeMovement
-      wodSetsDone: 0, // sets completed
     },
     userData: {
       currentWorkout: null,
@@ -463,6 +463,37 @@ export class WodConfigService {
     })
   }
 
+  generateTimeStamp(milliseconds) {
+    return {
+      raw: milliseconds,
+      label: moment(milliseconds).format('mm:ss:SSS').toString(),
+      dateString: new Date(milliseconds).toString(),
+    }
+  }
+
+  /**
+   * timestamps the last movement (current)
+   */
+  triggerCurrentMovementStarted() {
+    console.log('WodConfigService::triggerMovementStarted');
+    const current = _.last(this.formValues.userData.wodSetsDone);
+    current.timeStarted = this.generateTimeStamp(new Date().getTime());
+  }
+
+  /**
+   * timestamps the second last movement (previously done)
+   */
+  triggerPreviousMovementDone() {
+    console.log('WodConfigService::triggerMovementComplete');
+
+    const previous = this.formValues.userData.wodSetsDone[this.formValues.userData.wodSetsDone.length - 2];
+
+    if (!!previous) {
+      previous.timeComplete = this.generateTimeStamp(new Date().getTime());
+      previous.timeDuration = this.generateTimeStamp(new Date().getTime() - previous.timeStarted.raw);
+    }
+  }
+
   /**
    * fetch one random wod from generated
    * pool @see generateRandomWODs(number)
@@ -470,6 +501,7 @@ export class WodConfigService {
   fetchNextMovement() {
     const current = this.formValues.wodTypeMovementPool.pop();
     const upcoming = _.last(this.formValues.wodTypeMovementPool);
+    this.formValues.userData.wodSetsDone.push(current);
     return {
       current,
       upcoming
