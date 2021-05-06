@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~8.2.9",
     "@angular/platform-browser-dynamic": "~8.2.9",
     "@angular/router": "~8.2.9",
+    "@sentry/angular": "^6.3.5",
+    "@sentry/tracing": "^6.3.5",
     "@types/lodash": "^4.14.168",
     "bootstrap": "^5.0.0-beta3",
     "canvas-confetti": "^1.4.0",
