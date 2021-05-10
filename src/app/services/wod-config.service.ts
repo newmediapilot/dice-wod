@@ -249,10 +249,10 @@ export class WodConfigService {
         "key": "ring_row"
       },
       {
-        "name": "Russian Dead-lift",
+        "name": "Romanian Dead-lift",
         "min": 5,
         "max": 15,
-        "key": "russian_dead_lift"
+        "key": "romanian_dead_lift"
       },
       {
         "name": "Russian Twist",
@@ -301,6 +301,13 @@ export class WodConfigService {
         "key": "spiderman_lunge"
       },
       {
+        "name": "Split Squat",
+        "min": 8,
+        "max": 20,
+        "symmetrical": true,
+        "key": "split_squat"
+      },
+      {
         "name": "Standing Leg Raise",
         "min": 10,
         "max": 30,
@@ -331,6 +338,12 @@ export class WodConfigService {
         "min": 5,
         "max": 15,
         "key": "toe_to_bar"
+      },
+      {
+        "name": "Trap Raise",
+        "min": 5,
+        "max": 15,
+        "key": "trap_raise"
       },
       {
         "name": "Turkish Get-up",
