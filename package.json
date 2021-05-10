@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "changelog": "generate-changelog -a 1.0.0-a7..1.0.0-a10",
-    "package" : "ng build --prod && cd ./cordova/io.dicewod.www/ && cordova build --release android && cd ../../"
+    "package": "ng build --prod && cd ./cordova/io.dicewod.www/ && cordova build --release android && cd ../../"
   },
   "private": true,
   "dependencies": {
