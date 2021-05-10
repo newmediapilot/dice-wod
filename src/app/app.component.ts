@@ -15,9 +15,5 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.router.navigate(['/'])
-
-    setTimeout(() => {
-      eval('foobaz()');
-    }, 2000);
   }
 }
