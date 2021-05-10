@@ -1,3 +1,13 @@
+
+
+# Deployment
+
+`firebase login`
+`ng deploy`
+
+Source:
+https://blog.logrocket.com/deploy-angular-9-apps-to-firebase-hosting/
+
 # Changelog
 
 https://www.npmjs.com/package/generate-changelog
